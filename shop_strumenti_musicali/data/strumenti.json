@@ -1,0 +1,35 @@
+[
+  {
+    "id": "S1",
+    "nome": "Flauto dolce in legno di ciliegio in chiave di sol",
+    "tipo": "flauto",
+    "azienda": "Yamaha",
+    "venditore": "yamaha.corp",
+    "nome_venditore": "Yamaha corp.",
+    "quantita": 6,
+    "prezzo": 45.0,
+    "prezzo_noleggio_giornaliero": 4.5
+  },
+  {
+    "id": "S2",
+    "nome": "Chitarra elettrica Stratocaster",
+    "tipo": "chitarra",
+    "azienda": "Fender",
+    "venditore": "yamaha.corp",
+    "nome_venditore": "Yamaha corp.",
+    "quantita": 3,
+    "prezzo": 750.0,
+    "prezzo_noleggio_giornaliero": 75.0
+  },
+  {
+    "id": "S3",
+    "nome": "Pianoforte a coda professionale",
+    "tipo": "pianoforte",
+    "azienda": "Steinway",
+    "venditore": "mario.rossi",
+    "nome_venditore": "Mario Rossi",
+    "quantita": 1,
+    "prezzo": 4500.0,
+    "prezzo_noleggio_giornaliero": 450.0
+  }
+]

@@ -1,0 +1,7 @@
+from .compratore_repository import CompratoreRepository
+from .venditore_repository import VenditoreRepository
+from .amministratore_repository import AmministratoreRepository
+from .categoria_repository import CategoriaRepository
+from .strumento_repository import StrumentoRepository
+from .acquisto_repository import AcquistoRepository
+from .noleggio_repository import NoleggioRepository

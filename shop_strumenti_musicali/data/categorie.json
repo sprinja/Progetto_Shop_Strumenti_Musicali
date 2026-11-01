@@ -1,0 +1,26 @@
+[
+  {
+    "nome_tipo": "chitarra",
+    "quota_noleggio": 0.1
+  },
+  {
+    "nome_tipo": "flauto",
+    "quota_noleggio": 0.05
+  },
+  {
+    "nome_tipo": "pianoforte",
+    "quota_noleggio": 0.15
+  },
+  {
+    "nome_tipo": "sintetizzatore",
+    "quota_noleggio": 0.07
+  },
+  {
+    "nome_tipo": "batteria",
+    "quota_noleggio": 0.1
+  },
+  {
+    "nome_tipo": "violino",
+    "quota_noleggio": 0.12
+  }
+]
