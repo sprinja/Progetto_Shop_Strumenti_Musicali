@@ -1,0 +1,55 @@
+@startuml Requisiti
+left to right direction
+<style>
+frame{
+    LineThickness 2
+    backgroundColor #fcf7d6
+}
+file{
+    LineThickness 1.5
+    backgroundColor #ffe081
+}
+card{
+    LineThickness 1
+    }
+</style>
+
+frame "Analisi dei Requisiti" {
+    file "Requisiti non funzionali" {
+        card "Implementazione in python3" as RNF1 #ed9447
+        card "File strumenti" as RNF2 #a8f1f4
+        card "File venditori" as RNF3 #a8f1f4
+        card "File compratori" as RNF4 #a8f1f4
+        card "Verifica della password" as RNF5 #ffa0a0
+        card "Utenti" as RNF6 #ffa0a0
+        card "Amministratore" as RNF7 #ffa0a0
+    }
+    file "Requisiti funzionali" {
+        card "Registrazione" as RF1 #ffa0a0
+        card "Accesso differente" as RF2 #ffa0a0
+        file "Funzionalità utente" #f9f0b6  {
+            file "Funzionalità solo del compratore" #fff091  {
+                card "Acquisto" as RF3 #a8f1f4
+                card "Noleggio" as RF4 #a8f1f4
+                card "Finestra compratore" as RF8 #a8f1f4
+                            
+            }
+            file "Funzionalità solo del venditore" #fff091  {
+                card "Vendita" as RF5 #a8f1f4
+                card "Finestra venditore" as RF7 #a8f1f4
+                card "Inserimento di un nuovo tipo" as RF12 #a8f1f4
+                card "Modifica strumento" as RF13 #a8f1f4
+                card "Rimozione strumenti propri" as RF14 #a8f1f4
+
+            }
+            card "Autorimozione strumento" as RF6 #a8f1f4
+            card "Ricerca" as RF11 #a8f1f4
+        }
+        
+        file "Funzionalità amministratore" #f9f0b6  {
+            card "Rimozione utenti" as RF9 #a1ecae
+            card "Rimozione strumenti" as RF10 #a1ecae
+        } 
+    }
+}
+@enduml

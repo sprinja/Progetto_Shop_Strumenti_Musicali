@@ -1,0 +1,15 @@
+@startuml
+top to bottom direction
+package "Package Transazioni" {
+    class Acquisto {
+        + data_acquisto
+    }
+    class Noleggio {
+        + data_inizio
+        + durata_noleggio
+        + tempo_rimanente
+    }
+    
+    note bottom of Noleggio: Monitorato dall'attore Tempo
+}
+@enduml

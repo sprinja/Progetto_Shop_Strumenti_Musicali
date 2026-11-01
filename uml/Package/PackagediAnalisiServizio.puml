@@ -1,0 +1,43 @@
+@startuml
+skinparam class {
+    BackgroundColor White
+    ArrowColor Black
+    BorderColor Black
+}
+
+title Package di Analisi: Servizio
+
+package "Servizio" {
+    class Strumento {
+        + nome: String
+        + produttore: String
+        + quantita: Integer
+        + prezzo: Float
+    }
+
+    class CategoriaStrumento {
+        + nome_tipo: String
+    }
+
+    class Servizio {
+        <<abstract>>
+    }
+
+    ' Relazioni interne
+    Strumento "*" -right-> "1" CategoriaStrumento : "appartiene a" >
+    Strumento -up-|> Servizio : "è un"
+    CategoriaStrumento -up-|> Servizio : "è un"
+}
+
+note bottom of Strumento
+  Include logica di autorimozione:
+  se quantita == 0, l'istanza viene
+  eliminata dallo shop.
+end note
+
+note bottom of CategoriaStrumento
+  Deve essere creata dal venditore
+  PRIMA di poter inserire uno
+  strumento di quel tipo.
+end note
+@endum

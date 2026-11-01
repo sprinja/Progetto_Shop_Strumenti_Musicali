@@ -1,0 +1,11 @@
+@startuml
+top to bottom direction
+rectangle "Tempo" <<actor>>
+rectangle "Gestione Affitti" {
+    "Tempo" -> (Scadenza noleggio)
+    (Scadenza noleggio) .> (Verifica scadenza noleggio) : <<include>>
+    (Verifica scadenza noleggio) .> (Ricerca noleggio) : <<include>>
+    (Ricerca noleggio) ..> (Rimozione noleggio) : <<include>>
+    (Ricerca noleggio) ..> (Vendita) 
+}
+@enduml

@@ -1,0 +1,15 @@
+@startuml
+left to right direction
+actor Amministratore
+rectangle "Gestione Amministratore" {
+    Amministratore --> (Accesso da amministratore) 
+    (Accesso da amministratore) --> (Pagina amministratore)
+    (Pagina amministratore) --> (Rimozione utenti) 
+    (Rimozione utenti) --> (Rimozione compratori) 
+    (Rimozione compratori) ..> (Ricerca compratori) :<<include>>
+    (Rimozione utenti) --> (Rimozione venditori) 
+    (Rimozione venditori) ..> (Ricerca venditori) :<<include>>
+    (Pagina amministratore) --> (Rimozione strumenti)
+    (Rimozione strumenti) ..> (Ricerca strumenti) :<<include>>
+}
+@enduml

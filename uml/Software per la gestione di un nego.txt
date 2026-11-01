@@ -1,0 +1,19 @@
+Software per la gestione di un negozio online di strumenti musicali
+Il progetto proposto consiste nella realizzazione di uno shop online che permette all'utente di accedere da compratore o da venditore. A questo punto si effettuerà il login (o la registrazione in caso di primo accesso). Da notare che l'account da venditore e da compratore possono avere le stesse credenziali (utente e password) ma sono due account diversi.
+Una volta effettuato l'accesso l'utente visualizzerà una delle due pagine (in qualsiasi momento si potrà cambiare pagina semplicemente effettuando il login sull'altro account:
+	-Pagina Compratore: 
+		Compariranno a schermo tutti gli strumenti disponibili con informazioni del tipo: Il nome dello strumento (es: Flauto dolce in legno di ciliegio in chiave di sol), Tipo di 		strumento (es: flauto, chitarra, pianoforte etc...), Azienda produttrice (es: Yamaha, Ableton, Fender, etc...), Nome del venditore (può essere sia un'azienda che un venditore 		singolo) (es: Yamaha corp., Mario Rossi, etc...), Quantità di prodotti disponibili (es: 6, 7, 1), Prezzo (es: €450, €120, etc...).
+		Gli strumenti che non sono più disponibili (quantità di prodotti disponibili nulla) non verranno visualizzati e saranno anzi eliminati fino a che non saranno riaggiunti da un 		venditore.
+		Ci sarà anche una barra di ricerca per tipo, per prezzo e per azienda produttrice.
+		L'utente potrà selezionare un prodotto e scegliere se acquistarlo o affittarlo.
+		Nota: gli affitti variano per i vari prodotti in base al prezzo, al tipo e alla durata dell'affitto.
+		Inoltre nella parte bassa dello schermo ci sarà una finestra che potrà visualizzare la cronologia degli acquisti o quella degli affitti.
+		La finestra per la visualizzazione degli affitti permette di vedere tutte le informazioni del prodotto e anche di monitorare quando è stato effettuato l'affitto e quanto 		tempo manca per la fine.
+		La finestra per la visualizzazione degli acquisti permette invece di vedere tutte le informazioni del prodotto e il giorno in cui è stato effettuato l'acquisto.
+	-Pagina Venditore:
+		Compariranno a schermo solo gli strumenti che il compratore ha messo in vendita con tutte le informazioni sopra riportate. Inoltre il venditore potrà aggiungere strumenti da 		vendere, ovviamente inserendo tutte le informazioni necessarie. 
+		Ci sarà anche una barra di ricerca per tipo e per prezzo, ovviamente solo dei suoi prodotti.
+		Nota: se il venditore deve aggiungere uno strumento che ha un tipo non presente già nel sito, deve essere in grado di poter creare un nuovo tipo di strumento. Questo però va 		fatto prima di inserire un nuovo strumento.    
+		Inoltre nella parte bassa dello schermo avrà una finestra in cui potrà visualizzare la cronologia delle sue vendite o dei suoi affitti.
+		Nella finestra delle vendite vede gli strumenti da lui venduti, con tutte le informazioni, il giorno della vendita e il compratore che ha effettuato l'acquisto.
+		Nella finestra degli affitti vede gli strumenti da lui affittati, con tutte le informazioni, il giorno di inizio e di fine dell'affitto e il compratore che ha effettuato 		l'affitto.

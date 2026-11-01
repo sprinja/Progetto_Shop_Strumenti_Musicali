@@ -1,0 +1,13 @@
+@startuml
+top to bottom direction
+
+actor Utente
+actor Compratore
+actor Venditore
+actor Amministratore
+rectangle "Tempo" <<actor>>
+
+Utente <|-- Venditore
+Utente <|-- Compratore
+
+@enduml

@@ -1,0 +1,22 @@
+@startuml
+title sd Finestra Venditore
+
+start
+:scegliTipoCronologia;
+if (tipo == vendita) then (si)
+    :cercaVendite;
+    if (acquisti trovati?) then (si)
+        :mostraStrumentiVenduti;
+    else (no)
+        :mostraErrore;
+    endif
+else (no)
+    :cercaNoleggi;
+    if (noleggi trovati?) then (si)
+        :mostraStrumentiNoleggiati;
+    else (no)
+        :mostraErrore;
+    endif
+endif
+end
+@enduml

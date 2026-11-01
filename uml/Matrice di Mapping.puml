@@ -1,0 +1,18 @@
+@startsalt
+{#
+    . | **Caso d'Uso (UC)** | **Requisito Funzionale (RF)** | **Attore Coinvolto**
+    -- | -- | -- | --
+    UC1 | Registrazione | RF: Registrazione | Compratore, Venditore
+    UC2 | Login / Scelta Accesso | RF: Accesso differente | Compratore, Venditore, Admin
+    UC3 | Acquisto Strumento | RF: Acquisto | Compratore
+    UC4 | Noleggio Strumento | RF: Noleggio | Compratore
+    UC5 | Vendita (Inserimento) | RF: Vendita | Venditore
+    UC6 | Autorimozione Strumento| RF: Autorimozione strumento | Sistema (Trigger da UC3/UC4)
+    UC7 | Visualizzazione Cronologia | RF: Finestra compratore / venditore | Compratore, Venditore
+    UC8 | Ricerca Strumenti | RF: Ricerca | Compratore, Venditore
+    UC9 | Inserimento Nuovo Tipo | RF: Inserimento di un nuovo tipo | Venditore
+    UC10 | Rimozione Utenti | RF: Rimozione utenti | Amministratore
+    UC11 | Rimozione Strumenti | RF: Rimozione strumenti | Amministratore
+    UC12 | Gestione Scadenza Affitto| RF: Noleggio (Manutenzione) | Tempo (Actor), Sistema
+}
+@endsalt

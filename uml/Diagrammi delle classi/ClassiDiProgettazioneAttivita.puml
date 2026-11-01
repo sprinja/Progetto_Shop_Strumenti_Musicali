@@ -1,0 +1,72 @@
+@startuml
+
+class GestoreNegozio{
+}
+
+abstract class Utente {
+    - username: string
+    - password: string
+    - tipoUtente: string
+}
+
+class Compratore {
+    + effettuaAcquisto(strumento: Strumento, quantita: int): Acquisto
+    + effettuaNoleggio(strumento: Strumento, durataGiorni: int): Noleggio
+}
+
+class Venditore {
+    + aggiungiStrumento(strumento: Strumento): Void
+    + rimuoviStrumento(strumento: Strumento): Void
+    + modificaStrumento(strumento: Strumento, nuovaCaratteristica): Void
+    + inserisciTipo(categoriaStrumento: string):Void
+}
+
+
+class Amministratore {
+    + rimuoviUtente(tipo: tipoUtente, utente: nomeUtente): Void
+    + rimuoviStrumento(strumento: Strumento): Void
+}
+
+class Strumento {
+    - idStrumento: string
+    - nome: string
+    - marca: string
+    - prezzoAcquisto: float
+    - prezzoNoleggioGiornaliero: float
+    - disponibilita: int
+    - categoriaStrumento: string
+    + aggiornaQuantita(delta: int): Void
+}
+
+class Acquisto {
+    - dataVendita: date
+    - quantita: int
+    - totaleSpeso: float
+}
+
+class Noleggio {
+    - dataInizio: date
+    - dataFineMassima: date
+    - dataRestituzioneEffettiva: date
+    + calcolaCostoMassimo(dataInizio: date, dataFineMassima: date): float): float
+    + calcolaCostoEffettivo(dataInizio: date, dataFineEffettiva: date): float): float
+    + restituisciStrumento(): Void
+    + isAttivo(): boolean
+}
+
+Utente <|-- Compratore
+Utente <|-- Venditore
+Utente <|-- Amministratore
+
+Venditore "1" - "0..*" Strumento : gestisce 
+
+Compratore "1" -- "0..*" Acquisto : effettua 
+Acquisto "0..*" -- "1" Strumento 
+
+Compratore "1" -- "0..*" Noleggio : effettua 
+Noleggio "0..*" -- "1" Strumento   
+
+GestoreNegozio "1" - "0..*" Utente : gestisce
+GestoreNegozio "1" ---- "0..*" Strumento : gestisce
+
+@enduml

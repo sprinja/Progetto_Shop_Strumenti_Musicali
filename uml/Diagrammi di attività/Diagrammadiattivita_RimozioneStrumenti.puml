@@ -1,0 +1,14 @@
+@startuml
+title sd Rimozione Strumenti
+
+start
+:inserisciIDStrumento;
+:verificaEsistenzaStrumento;
+if (strumento trovato?) then (si)
+    :rimuoviStrumento;
+    :confermaRimozione;
+else (no)
+    :mostraErrore;
+endif
+end
+@enduml

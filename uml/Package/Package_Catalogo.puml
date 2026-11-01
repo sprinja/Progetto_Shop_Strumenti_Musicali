@@ -1,0 +1,16 @@
+@startuml
+left to right direction
+package "Package Catalogo" {
+    class Strumento {
+        + nome
+        + produttore
+        + quantita
+        + prezzo
+    }
+    class CategoriaStrumento {
+        + nome_tipo
+    }
+    
+    Strumento "*" --> "1" CategoriaStrumento
+}
+@enduml

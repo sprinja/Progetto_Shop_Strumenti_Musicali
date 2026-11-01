@@ -1,0 +1,29 @@
+@startuml
+skinparam style strictuml
+skinparam sequenceMessageAlign center
+title sd TerminaNoleggio
+actor ":Compratore" as C
+participant ":PaginaCompratore" as PC <<control>>
+participant ":GestoreShop" as GS <<boundary>>
+participant ":FileTransazioni" as FT <<repository>>
+participant ":FileStrumenti" as FS <<repository>>
+
+C -> PC : selezionaNoleggio(idStrumento, nomeUtente)
+activate PC
+PC -> GS : terminaNoleggio(idStrumento, nomeUtente)
+activate GS
+GS -> FT : verificaPresenza(idStrumento, nomeUtente)
+activate FT
+FT --> GS : presente
+deactivate FT
+alt presente = True
+    GS -> FT : eliminaNoleggio (idStrumento, nomeUtente)
+    GS -> FS : reinserireStrumento (idStrumento)
+    GS --> PC : confermaTerminazione
+    PC --> C : mostraMessaggio("Noleggio Terminato Correttamente")
+else presente = False
+    GS --> PC : errore("Non esiste questo Noleggio")
+    PC --> C : mostraErrore("Questo Noleggio non esiste")
+end
+
+@enduml

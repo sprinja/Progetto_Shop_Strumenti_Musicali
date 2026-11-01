@@ -1,0 +1,24 @@
+@startuml
+top to bottom direction
+title pkg Package di analisi (Shop Strumenti Musicali)
+
+package "Attività" {
+    class "+ Acquisto"
+    class "+ Amministratore"
+    class "+ Compratore"
+    class "+ Cronologia"
+    class "+ Noleggio"
+    class "+ Utente"
+    class "+ Venditore"
+}
+
+package "Servizio" {
+    class "+ CategoriaStrumento"
+    class "+ Strumento"
+    class "+ Servizio"
+}
+
+' Relazione di utilizzo tra i due package
+"Attività" --> "Servizio" : <<use>>
+
+@endum

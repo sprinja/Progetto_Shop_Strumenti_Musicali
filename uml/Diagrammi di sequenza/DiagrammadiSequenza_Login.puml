@@ -1,0 +1,45 @@
+@startuml
+skinparam style strictuml
+skinparam sequenceMessageAlign center
+
+title sd LoginUtente
+
+actor ":Utente" as U
+participant ":InterfacciaLogin" as IL <<control>>
+participant ":GestoreAccount" as GA <<boundary>>
+participant ":FileCompratori" as FC <<repository>>
+participant ":FileVenditori" as FV <<repository>>
+
+   
+loop Fino a quando i dati non sono validi  
+    U -> IL : inserisceDati(username, password, tipo)
+    activate IL
+    
+    IL -> GA : verificaLogin(username, password)
+    activate GA  
+    alt  conferma = true       
+        alt tipo = "Compratore"
+        GA -> FC : verificaPresenza(username, password) 
+        activate FC
+        FC --> GA : conferma
+        deactivate FC
+
+        else tipo = "Venditore"
+        GA -> FV : verificaPresenza(username, password)
+        activate FV
+        FV -> GA : conferma
+        deactivate FV
+        end
+        GA --> IL : confermaSuccesso
+        IL --> U : apriPagina(tipo)
+    else conferma = false
+        GA --> IL : errore("Dati non validi")
+        IL --> U : mostraErrore("Dati non validi")
+    end
+    
+end
+
+deactivate GA
+deactivate IL
+
+@enduml

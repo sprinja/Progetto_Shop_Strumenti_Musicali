@@ -1,0 +1,3 @@
+fai in modo che nelle modifiche degli strumenti, quando si modifica il tipo c'è un menù a tendina
+
+fai in modo che non si possano proprio inserire lettere dove si dovrebbero inserire solo numeri, come nell'inserimento del prezzo

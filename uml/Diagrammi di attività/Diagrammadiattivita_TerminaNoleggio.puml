@@ -1,0 +1,15 @@
+@startuml
+title sd Termina Noleggio
+
+start
+:inserisciIDStrumento;
+:inserisciNomeUtente;
+if (noleggio presente?) then (si)
+  :eliminaNoleggio;
+  :reintrodurreStrumento;
+  :confermaTerminazione;
+else (no)
+  :noleggioNonPresente;
+endif
+end
+@enduml

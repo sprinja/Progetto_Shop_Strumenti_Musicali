@@ -1,0 +1,14 @@
+@startuml
+title sd Scadenza Noleggi
+
+start
+while (i<Noleggi)
+    if (dataAttuale == dataScadenza) then (si)
+        :terminaNoleggio;
+        :restituisciStrumento;
+        :confermaTerminazione;
+    else (no)
+    endif
+endwhile
+end
+@enduml

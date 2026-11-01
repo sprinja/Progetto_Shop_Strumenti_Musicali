@@ -1,0 +1,25 @@
+@startuml
+left to right direction
+actor Utente
+rectangle "Gestione Utente" {
+    Utente --> (scelta accesso)
+    (scelta accesso)-->(accesso compratore)
+    (scelta accesso) --> (accesso venditore)
+    (login).|>(accesso compratore)
+    (registrazione).|>(accesso compratore)
+    (login).|>(accesso venditore)
+    (registrazione).|>(accesso venditore)
+    (accesso compratore) --> (pagina compratore)
+    (accesso venditore) --> (pagina venditore)
+    (pagina compratore) --> (acquisto)
+    (pagina compratore) --> (noleggio)
+    (pagina compratore) --> (finestra compratore)
+    (pagina venditore) --> (vendita)
+    (pagina venditore) --> (finestra venditore)
+    (pagina venditore) --> (inserimento di un nuovo tipo)
+    (acquisto)..|>(autorimozione strumento)
+    (noleggio)..|>(autorimozione strumento)
+    (pagina compratore) --> (ricerca strumenti)
+    (pagina venditore) --> (ricerca strumenti)
+}
+@enduml

@@ -1,0 +1,42 @@
+@startuml
+skinparam style strictuml
+skinparam sequenceMessageAlign center
+title sd Vendita
+
+actor ":Venditore" as V
+participant ":PaginaVenditore" as PV <<control>>
+participant ":GestoreShop" as GS <<boundary>>
+participant ":FileStrumenti" as FS <<repository>>
+participant ":FileTipo" as T <<repository>>
+
+loop finchè non si inserisce un tipo esistente
+    V -> PV : aggiungiStrumento(nomeStrumento, quantita, tipo, prezzo, nomeUtente, aziendaProduttrice)
+    activate PV
+    PV -> GS : controllaStrumento(nomeStrumento, tipo, prezzo, nomeUtente, aziendaProduttrice)
+    activate GS
+    GS -> T : esistenzaTipo(tipo)
+    activate T
+    T --> GS : esisteTipo
+    deactivate T
+    alt esisteTipo = true
+        GS -> FS : unicitaStrumento(nomeStrumento, tipo, prezzo, nomeUtente, aziendaProduttrice)
+        activate FS
+        FS -> GS : esiste
+        deactivate FS
+        alt esiste = false
+            GS -> FS : creaStrumento(nomeStrumento, quantita, tipo, prezzo, nomeUtente, aziendaProduttrice, idStrumento)
+            GS --> PV : confermaAggiunta
+            PV --> V : mostraMessaggio("Strumento aggiunto correttamente")
+        else esiste = true
+            GS -> FS : aggiornaQuantita(nomeStrumento, quantita, tipo, prezzo, nomeUtente, aziendaProduttrice, idStrumento)
+            GS --> PV : confermaAggiornamento
+            PV --> V : mostraMessaggio("Prodotto già esistente. Prodotto aggiornato")    
+        end
+    else esisteTipo = false
+        GS --> PV : rifiutoInserimento
+        PV --> V : mostraMessaggio("Non esiste il tipo inserito")
+    end
+end
+
+deactivate GS
+deactivate PV

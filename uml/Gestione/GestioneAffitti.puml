@@ -1,0 +1,26 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+' Definizione dell'attore come indicato nell'immagine image_75f135.png
+actor "Compratore" as C
+rectangle "Tempo" as T <<actor>>
+
+rectangle "Gestione Affitti" {
+    usecase "Scadenza noleggio" as UC_scadenza
+    usecase "Verifica scadenza noleggio" as UC_verifica
+    usecase "Ricerca noleggio" as UC_ricerca
+    usecase "Rimozione noleggio" as UC_rimozione
+    usecase "Vendita" as UC_vendita
+    
+    ' Relazioni tra i casi d'uso
+    T --> UC_scadenza
+    C ----> UC_ricerca
+    UC_scadenza ..> UC_verifica : <<include>>
+    UC_verifica ..> UC_ricerca : <<include>>
+    
+    UC_ricerca ..> UC_rimozione : <<include>>
+    UC_ricerca ..> UC_vendita
+}
+
+@enduml

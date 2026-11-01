@@ -1,0 +1,22 @@
+@startuml
+title sd Vendita
+
+start
+while (tipo esiste?) is (si)
+    :inserisciStrumento;
+    :controllaEsistenzaTipo;
+    if (tipo esiste?) then (si)
+        :controllaEsistenzaStrumento;
+        if (strumento esiste?) then (si)
+            :aggiornaStrumento;
+            :confermaModifica;
+        else (no)
+            :aggiungiStrumento;
+            :confermaAggiunta;
+        endif
+    else (no)
+        :mostraErrore;
+    endif
+endwhile (no)
+end
+@enduml

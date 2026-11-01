@@ -1,0 +1,59 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Utente" as user
+
+rectangle "Gestione Utente" {
+    usecase "scelta accesso" as UC_scelta
+    usecase "accesso compratore" as UC_acc_comp
+    usecase "accesso venditore" as UC_acc_vend
+    usecase "login" as UC_login
+    usecase "registrazione" as UC_reg
+    usecase "pagina compratore" as UC_pag_comp
+    usecase "pagina venditore" as UC_pag_vend
+    
+    usecase "acquisto" as UC_acquisto
+    usecase "finestra compratore" as UC_fin_comp
+    usecase "noleggio" as UC_noleggio
+    usecase "ricerca strumenti" as UC_ricerca
+    
+    usecase "modifica strumento" as UC_modifica
+    usecase "finestra venditore" as UC_fin_vend
+    usecase "vendita" as UC_vendita
+    usecase "inserisci nuovo tipo" as UC_inserimento
+    
+    usecase "autorizzazione strumento" as UC_auto
+}
+
+' Relazioni principali
+user --> UC_scelta
+
+UC_scelta --> UC_acc_comp
+UC_scelta --> UC_acc_vend
+
+' Login e Registrazione (Relazioni tratteggiate)
+UC_login .> UC_acc_vend
+UC_login .> UC_acc_comp
+UC_reg .> UC_acc_comp
+UC_reg .> UC_acc_vend
+
+' Percorso Compratore
+UC_acc_comp --> UC_pag_comp
+UC_pag_comp --> UC_acquisto
+UC_pag_comp --> UC_fin_comp
+UC_pag_comp --> UC_noleggio
+UC_pag_comp --> UC_ricerca
+
+' Percorso Venditore
+UC_acc_vend --> UC_pag_vend
+UC_pag_vend --> UC_ricerca
+UC_pag_vend --> UC_modifica
+UC_pag_vend --> UC_fin_vend
+UC_pag_vend --> UC_vendita
+UC_pag_vend --> UC_inserimento
+
+' Autorizzazione (Relazioni finali tratteggiate)
+UC_acquisto ..> UC_auto
+
+@enduml

@@ -1,0 +1,186 @@
+@startuml
+package "class Viste"{
+    package "GestioneFinestraCompratore" {
+        class PyQt5::QWidget
+
+        class VistaFinestraCompratore {
+            + list_acquisti: QListView
+            + list_noleggi: QListView
+            + list_strumenti_shop: QListView
+            + combo_caratteristica_ricerca: QComboBox
+            + txt_ricerca: QLineEdit
+            + button_acquista: QPushButton
+            + button_noleggia: QPushButton
+            + button_termina_noleggio: QPushButton
+            + __init__(): void
+            + cerca_strumenti(): void
+            + acquista_strumento(): void
+            + noleggia_strumento(): void
+            + termina_noleggio(): void
+            + update_ui(): void
+        }
+
+        class VistaAcquisto {
+            + acquisto_callback: Function
+            + list_strumenti: QListView
+            + txt_strumento_da_acquistare: QLineEdit
+            + __init__(): void
+            + conferma_acquisto(): void
+            + registra_acquisto(): void
+        }
+
+        class VistaNoleggio {
+            + noleggio_callback: Function
+            + list_strumenti: QListView
+            + txt_strumento_da_noleggiare: QLineEdit
+            + __init__(): void
+            + conferma_noleggio(): void
+            + registra_noleggio(): void
+        }
+    
+        class VistaTerminaNoleggio {
+            + termina_noleggio_callback: Function
+            + list_noleggi: QListView
+            + combo_noleggio_da_terminare: QComboBox
+            + __init__(): void
+            + conferma_termina_noleggio(): void
+            + registra_termina_noleggio(): void 
+        }
+
+        PyQt5::QWidget <|-- VistaFinestraCompratore        
+        VistaFinestraCompratore "1" -- "0..1" VistaAcquisto
+        VistaFinestraCompratore "1" -- "0..1" VistaNoleggio
+        VistaFinestraCompratore "1" -- "0..1" VistaTerminaNoleggio
+    }
+    
+    package "GestioneAccesso" {
+        class PyQt5::QWidget
+    
+        class VistaAccesso {
+            + combo_tipo_utente: QComboBox
+            + txt_username: QLineEdit
+            + txt_password: QLineEdit
+            + btn_login: QPushButton
+            + btn_registrati: QPushButton
+            + __init__(): void
+            + esegui_login(): void
+            + registra_utente(): void
+            + update_ui(): void
+        }
+
+        PyQt5::QWidget <|-- VistaAccesso
+    }
+
+    package "GestioneFinestraAmministratore" {
+        class PyQt5::QWidget
+
+        class VistaFinestraAmministratore {
+            + list_compratori: QListView
+            + list_venditori: QListView
+            + list_strumenti: QListView
+            + button_rimuovi_compratore: QPushButton
+            + button_rimuovi_venditore: QPushButton
+            + button_rimuovi_strumento: QPushButton
+            + __init__(): void
+            + rimuovi_compratore(): void
+            + rimuovi_venditore(): void
+            + rimuovi_strumento(): void
+            + update_ui(): void
+        }
+    
+        class VistaRimuoviCompratore {
+            + rimuovi_compratore_callback: Function
+            + list_compratori: QListView
+            + txt_compratore_da_rimuovere: QLineEdit
+            + __init__(): void
+            + conferma_rimozione(): void
+            + registra_rimozione(): void
+        }
+
+        class VistaRimuoviVenditore {
+            + rimuovi_venditore_callback: Function
+            + list_venditori: QListView
+            + txt_venditore_da_rimuovere: QLineEdit
+            + __init__(): void
+            + conferma_rimozione(): void
+            + registra_rimozione(): void
+        }
+
+        class VistaRimuoviStrumento {
+            + rimuovi_strumento_callback: Function
+            + list_strumenti: QListView
+            + txt_strumento_da_rimuovere: QLineEdit
+            + __init__(): void
+            + conferma_rimozione(): void
+            + registra_rimozione(): void
+        }
+
+        PyQt5::QWidget <|-- VistaFinestraAmministratore
+        VistaFinestraAmministratore "1" -- "0..1" VistaRimuoviCompratore
+        VistaFinestraAmministratore "1" -- "0..1" VistaRimuoviVenditore
+        VistaFinestraAmministratore "1" -- "0..1" VistaRimuoviStrumento
+    }
+
+    package "GestioneFinestraVenditore" {
+        class PyQt5::QWidget
+
+        class VistaFinestraVenditore {
+            + list_vendite: QListView
+            + list_noleggi: QListView
+            + list_miei_strumenti: QListView
+            + combo_caratteristica_ricerca: QComboBox
+            + txt_ricerca: QLineEdit
+            + button_aggiungi_strumento: QPushButton
+            + button_modifica_strumento: QPushButton
+            + button_inserisci_tipo: QPushButton
+            + __init__(): void
+            + cerca_strumenti(): void
+            + aggiungi_strumento(): void
+            + modifica_strumento(): void
+            + inserisci_tipo_strumento(): void
+            + update_ui(): void
+            }
+
+        class VistaAggiungiStrumento {
+            + aggiungi_callback: Function
+            + combo_tipo_strumento: QComboBox
+            + txt_nome_strumento: QLineEdit
+            + txt_azienda_strumento: QLineEdit
+            + txt_prezzo_strumento: QLineEdit
+            + txt_nome_venditore: QLineEdit
+            + txt_quantita: QLineEdit
+            + __init__(): void
+            + conferma_aggiunta(): void
+            + registra_aggiunta(): void
+        }
+
+        class VistaModificaStrumento {
+            + modifica_callback: Function
+            + combo_strumento_da_modificare: QComboBox
+            + combo_caratteristica_da_modificare: QComboBox
+            + txt_nuovo_valore: QLineEdit
+            + __init__(): void
+            + conferma_modifica(): void
+            + registra_modifica(): void
+        }
+    
+        class VistaInserisciTipoStrumento {
+            + inserisci_callback: Function
+            + txt_nome_nuovo_tipo: QLineEdit
+            + __init__(): void
+            + conferma_inserimento(): void
+            + registra_inserimento(): void
+        }
+    
+        PyQt5::QWidget <|-- VistaFinestraVenditore        
+        VistaFinestraVenditore "1" -- "0..1" VistaAggiungiStrumento
+        VistaFinestraVenditore "1" -- "0..1" VistaModificaStrumento
+        VistaFinestraVenditore "1" -- "0..1" VistaInserisciTipoStrumento
+    }
+}
+
+GestioneAccesso -[hidden] GestioneFinestraCompratore
+GestioneFinestraCompratore --[hidden]-- GestioneFinestraAmministratore
+GestioneFinestraVenditore -[hidden] GestioneFinestraAmministratore
+
+@enduml

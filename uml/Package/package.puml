@@ -1,0 +1,59 @@
+@startuml
+left to right direction
+title Diagramma dei Package di Analisi
+
+package "Package Utenti" {
+    abstract class Utente {
+        + username
+        + password
+    }
+    class Compratore
+    class Venditore
+    class Amministratore {
+        + credenziali_statiche
+    }
+    
+    note right of Amministratore: Unico, non registrabile
+    
+    Utente <|-- Compratore
+    Utente <|-- Venditore
+}
+
+package "Package Catalogo" {
+    class Strumento {
+        + nome
+        + produttore
+        + quantita
+        + prezzo
+    }
+    class CategoriaStrumento {
+        + nome_tipo
+    }
+    
+    Strumento "*" -> "1" CategoriaStrumento : viene definito 
+}
+
+package "Package Transazioni" {
+    class Acquisto {
+        + data_acquisto
+    }
+    class Noleggio {
+        + data_inizio
+        + durata_noleggio
+        + tempo_rimanente
+    }
+    
+    note bottom of Noleggio: Monitorato dall'attore Tempo
+}
+
+"Package Transazioni" .up..> "Package Catalogo" : modifica disponibilità
+"Package Transazioni" .up..> "Package Utenti" : registra per
+"Package Utenti" .down..> "Package Catalogo" : gestisce/visualizza
+
+Venditore "1" -- "*" Strumento : mette in vendita
+Compratore "1" -- "*" Acquisto : effettua
+Compratore "1" -- "*" Noleggio : effettua
+Amministratore .up.> Utente : rimuove
+Amministratore .down.> Strumento : modifica/rimuove
+
+@enduml

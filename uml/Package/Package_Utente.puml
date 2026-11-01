@@ -1,0 +1,20 @@
+@startuml
+left to right direction
+package "Package Utenti" {
+    abstract class Utente {
+        + username
+        + password
+    }
+    class Compratore
+    class Venditore
+    class Amministratore {
+        + credenziali_statiche
+    }
+    
+    note right of Amministratore: Unico, non registrabile
+    
+    Utente <|-- Compratore
+    Utente <|-- Venditore
+    Utente <.. Amministratore : rimuove
+}
+@enduml
