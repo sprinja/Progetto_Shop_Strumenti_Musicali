@@ -1,0 +1,4 @@
+per eseguire i test: 
+entrare da terminale dentro la cartella shop_strumenti_musicali
+poi per testare un componente si scrive:
+python -m unittest -v Test.testNomeTest
