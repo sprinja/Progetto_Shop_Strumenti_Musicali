@@ -17,7 +17,7 @@ activate FT
 FT --> GS : presente
 deactivate FT
 alt presente = True
-    GS -> FT : eliminaNoleggio (idStrumento, nomeUtente)
+    GS -> FT : terminaNoleggio (idStrumento, nomeUtente)
     GS -> FS : reinserireStrumento (idStrumento)
     GS --> PC : confermaTerminazione
     PC --> C : mostraMessaggio("Noleggio Terminato Correttamente")
