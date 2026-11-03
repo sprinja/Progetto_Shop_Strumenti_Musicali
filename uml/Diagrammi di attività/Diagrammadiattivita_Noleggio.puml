@@ -1,5 +1,5 @@
 @startuml
-title sd Noleggio
+title ad Noleggio
 
 start
 :selezionaNoleggio;

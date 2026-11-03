@@ -1,5 +1,5 @@
 @startuml
-title sd Ricerca Strumenti Compratore
+title ad Ricerca Strumenti Compratore
 
 start
 :inserisciAttributo;

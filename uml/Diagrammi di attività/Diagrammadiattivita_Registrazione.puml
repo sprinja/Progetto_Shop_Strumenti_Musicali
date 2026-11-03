@@ -1,5 +1,5 @@
 @startuml
-title sd Registrazione
+title ad Registrazione
 
 start
 :inserireDati;

@@ -1,5 +1,5 @@
 @startuml
-title sd InserimentoNuovoTipo
+title ad InserimentoNuovoTipo
 
 start
 :inserireTipo;

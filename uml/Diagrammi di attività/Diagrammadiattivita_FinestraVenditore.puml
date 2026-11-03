@@ -1,5 +1,5 @@
 @startuml
-title sd Finestra Venditore
+title ad Finestra Venditore
 
 start
 :scegliTipoCronologia;

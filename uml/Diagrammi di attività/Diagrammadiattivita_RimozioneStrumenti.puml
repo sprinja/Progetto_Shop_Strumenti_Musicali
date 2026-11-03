@@ -1,5 +1,5 @@
 @startuml
-title sd Rimozione Strumenti
+title ad Rimozione Strumenti
 
 start
 :inserisciIDStrumento;

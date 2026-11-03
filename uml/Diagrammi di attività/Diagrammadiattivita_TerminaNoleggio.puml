@@ -1,5 +1,5 @@
 @startuml
-title sd Termina Noleggio
+title ad Termina Noleggio
 
 start
 :inserisciIDStrumento;

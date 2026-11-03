@@ -1,5 +1,5 @@
 @startuml
-title sd AccessoAmministratore
+title ad AccessoAmministratore
 
 start
 :inserisceDati;

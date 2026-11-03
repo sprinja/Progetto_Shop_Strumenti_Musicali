@@ -1,5 +1,5 @@
 @startuml
-title sd Scadenza Noleggi
+title ad Scadenza Noleggi
 
 start
 while (i<Noleggi)

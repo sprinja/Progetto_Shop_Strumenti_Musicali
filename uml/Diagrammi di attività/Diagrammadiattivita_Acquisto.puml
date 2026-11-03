@@ -1,5 +1,5 @@
 @startuml
-title sd Acquisto
+title ad Acquisto
 
 start
 :selezionaAcquisto;

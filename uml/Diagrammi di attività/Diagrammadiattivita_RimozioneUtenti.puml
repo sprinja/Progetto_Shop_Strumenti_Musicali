@@ -1,5 +1,5 @@
 @startuml
-title sd Rimozione Utenti
+title ad Rimozione Utenti
 
 start
 :inserisciTipoUtente;

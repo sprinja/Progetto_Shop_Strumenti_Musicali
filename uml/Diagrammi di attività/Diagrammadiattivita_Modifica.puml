@@ -1,5 +1,5 @@
 @startuml
-title sd ModificaStrumenti
+title ad ModificaStrumenti
 
 start
 :selezionaStrumento;
