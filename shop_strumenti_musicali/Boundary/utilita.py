@@ -7,18 +7,18 @@ def chiama(funzione, *args, **kwargs):
     with _blocco:
         return funzione(*args, **kwargs)
 
-# metodo per convertire un testo in un numero intero, ritorna nessuno se il testo non è un numero intero
+# metodo per convertire un testo in un numero intero, ritorna None se il testo non è un numero intero
 def aIntero(testo):
     try:
         return int(str(testo).strip()) # converte il testo in numero intero dopo aver rimosso gli spazi bianchi
-    except (TypeError, ValueError):    # se il testo non è un numero intero, ritorna nessuno
+    except (TypeError, ValueError):    # se il testo non è un numero intero, ritorna None
         return None
 
-# metodo per convertire un testo in un numero decimale, ritorna nessuno se il testo non è un numero decimale
+# metodo per convertire un testo in un numero decimale, ritorna None se il testo non è un numero decimale
 def aDecimale(testo):
     try:
         return float(str(testo).strip().replace(",", ".")) # converte il testo in numero decimale dopo aver rimosso gli spazi e sostituito le virgole col punto
-    except (TypeError, ValueError):    # se il testo non è un numero decimale, ritorna nessuno
+    except (TypeError, ValueError):    # se il testo non è un numero decimale, ritorna None
         return None
 
 # metodo per chiedere all'utente un numero intero finché non inserisce un valore valido
@@ -69,13 +69,13 @@ def stampaElenco(elenco, vuoto="Nessun elemento"):
 def stampaStrumenti(strumenti):
     stampaElenco(strumenti, "Nessuno strumento disponibile")    # chiama il metodo per stampare l'elenco degli strumenti disponibili
 
-# metodo per chiedere all'utente di scegliere uno strumento tra quelli disponibili, ritorna nessuno se non ne sceglie nessuno
+# metodo per chiedere all'utente di scegliere uno strumento tra quelli disponibili, ritorna None se non ne sceglie nessuno
 def scegliStrumento(strumenti):
-    if not strumenti:   # se non ci sono strumenti tra cui scegliere, ritorna nessuno
+    if not strumenti:   # se non ci sono strumenti tra cui scegliere, ritorna None
         print("Non ci sono strumenti tra cui scegliere")
         return None
     codice = input("Id dello strumento (vuoto per annullare)> ").strip()   # legge l'id dello strumento inserito dall'utente e rimuove spazi bianchi
-    if not codice:  # se l'id non è stato inserito, ritorna nessuno
+    if not codice:  # se l'id non è stato inserito, ritorna None
         return None
     for i in strumenti: # ciclo per confrontare l'id di ogni strumento disponibile con l'id inserito
         if i.getId().lower() == codice.lower():    # se l'id dello strumento corrisponde a quello inserito, ritorna quello strumento
