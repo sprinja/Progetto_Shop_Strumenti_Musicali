@@ -49,8 +49,10 @@ class VistaTerminaNoleggio(QWidget):
 
     # metodo per selezionare nel menù a tendina il noleggio cliccato nella lista dei noleggi attivi
     def onNoleggioSelezionato(self, item):
-        id_strumento = item.text().split(" | ")[0]    # ottiene l'id dello strumento dalla riga cliccata nella lista, separando il testo della riga per il carattere "|"
-        indice = self.combo_noleggio_da_terminare.findData(id_strumento)   # cerca il noleggio con lo stesso id nel menù a tendina
+        noleggio = next((i for i in self._noleggi if str(i) == item.text()), None)    # cerca il noleggio corrispondente alla riga cliccata, confrontando il testo della riga con la descrizione di ogni noleggio
+        if noleggio is None:    # se la riga cliccata non corrisponde ad alcun noleggio, non fa nulla
+            return
+        indice = self.combo_noleggio_da_terminare.findData(noleggio.getStrumento().get("id"))   # cerca nel menù a tendina l'id dello strumento del noleggio cliccato
         if indice >= 0:    # se il noleggio è stato trovato nel menù a tendina, lo seleziona
             self.combo_noleggio_da_terminare.setCurrentIndex(indice)
 
@@ -60,7 +62,7 @@ class VistaTerminaNoleggio(QWidget):
         if not id_strumento:    # se non è stato selezionato nessun noleggio, errore
             QMessageBox.warning(self, "Attenzione", "Seleziona un noleggio")
             return
-        risposta = QMessageBox.question(self, f"Confermi di terminare il noleggio dello strumento {id_strumento}?", QMessageBox.Yes | QMessageBox.No)   # mostra un messaggio di conferma per la terminazione del noleggio selezionato
+        risposta = QMessageBox.question(self, "Conferma", f"Confermi di terminare il noleggio dello strumento {id_strumento}?", QMessageBox.Yes | QMessageBox.No)   # mostra un messaggio di conferma per la terminazione del noleggio selezionato
         if risposta == QMessageBox.Yes: # se la risposta è positiva, termina il noleggio
             self.registra_termina_noleggio()
 
