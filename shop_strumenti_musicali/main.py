@@ -1,3 +1,4 @@
+import os
 import sys
 from PyQt5.QtWidgets import QApplication
 from Repos import (CompratoreRepository, VenditoreRepository, AmministratoreRepository, CategoriaRepository, StrumentoRepository, AcquistoRepository, NoleggioRepository)
@@ -6,13 +7,14 @@ from Views import Applicazione
 
 def main():
     # costruisce il sistema
-    compratori = CompratoreRepository("data/compratori.json")
-    venditori = VenditoreRepository("data/venditori.json")
-    amministratori = AmministratoreRepository("data/amministratori.json")
-    categorie = CategoriaRepository("data/categorie.json")
-    strumenti = StrumentoRepository("data/strumenti.json", categorie)
-    acquisti = AcquistoRepository("data/acquisti.json", compratori)
-    noleggi = NoleggioRepository("data/noleggi.json", compratori)
+    cartella = os.path.dirname(os.path.abspath(__file__))
+    compratori = CompratoreRepository(os.path.join(cartella, "data", "compratori.json"))
+    venditori = VenditoreRepository(os.path.join(cartella, "data", "venditori.json"))
+    amministratori = AmministratoreRepository(os.path.join(cartella, "data", "amministratori.json"))
+    categorie = CategoriaRepository(os.path.join(cartella, "data", "categorie.json"))
+    strumenti = StrumentoRepository(os.path.join(cartella, "data", "strumenti.json"), categorie)
+    acquisti = AcquistoRepository(os.path.join(cartella, "data", "acquisti.json"), compratori)
+    noleggi = NoleggioRepository(os.path.join(cartella, "data", "noleggi.json"), compratori)
     gestore_utenti = GestoreUtenti(compratori, venditori)
     gestore_catalogo = GestoreCatalogo(strumenti, categorie)
     gestore_acquisti = GestoreAcquisti(strumenti, compratori, acquisti)
