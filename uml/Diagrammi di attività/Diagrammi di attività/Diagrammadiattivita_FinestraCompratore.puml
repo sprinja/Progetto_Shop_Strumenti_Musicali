@@ -1,0 +1,22 @@
+@startuml
+title ad Finestra Compratore
+
+start
+:scegliTipoCronologia;
+if (tipo == acquisto) then (si)
+    :cercaAcquisti;
+    if (acquisti trovati?) then (si)
+        :mostraStrumentiComprati;
+    else (no)
+        :mostraErrore;
+    endif
+else (no)
+    :cercaNoleggi;
+    if (noleggi trovati?) then (si)
+        :mostraStrumentiNoleggiati;
+    else (no)
+        :mostraErrore;
+    endif
+endif
+end
+@enduml

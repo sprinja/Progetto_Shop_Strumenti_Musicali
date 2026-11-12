@@ -1,0 +1,15 @@
+@startuml
+title ad Login
+
+start
+:inserisceDati;
+:ricercaDati;
+if (dati Compratore?) then (si)
+    :eseguiAccessoCompratore;
+elseif (dati Venditore?) then (si)
+    :eseguiAccessoVenditore;
+else (no)
+    :mostraErrore;
+endif   
+end
+@enduml

@@ -1,0 +1,24 @@
+@startuml
+title ad Acquisto
+
+start
+:selezionaAcquisto;
+:controllaEsistenza;
+if (prodotto esistente?) then (si)
+    :verificaQuantitaDisponibile;
+    if (quantità disponibile?) then (si)
+        :rimuoviQuantitaDalCatalogo;
+        if (nuova quantità == 0) then (si)
+            :rimuoviProdottoDalCatalogo;
+        else (no)
+            :aggiornaQuantitaNelCatalogo;
+        endif
+        :mostraConfermaAcquisto;
+    else (no)
+        :mostraErroreQuantita;
+    endif
+else (no)
+    :mostraErroreID;
+endif   
+end
+@enduml

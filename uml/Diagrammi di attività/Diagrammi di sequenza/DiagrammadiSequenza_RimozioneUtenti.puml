@@ -1,0 +1,54 @@
+@startuml
+skinparam style strictuml
+skinparam sequenceMessageAlign center
+title sd RimozioneUtenti
+
+actor ":Amministratore" as A
+participant ":PaginaAmministratore" as PA <<control>>
+participant ":GestoreShop" as GS <<boundary>>
+participant ":FileCompratori" as FC <<repository>>
+participant ":FileVenditori" as FV <<repository>>
+participant ":FileStrumenti" as FS <<repository>>
+participant ":FileTransazioni" as FT <<repository>>
+
+A -> PA : inserisciTipoUtente(tipo)
+activate PA
+A -> PA : inserisciNomeUtente(nomeUtente)
+PA -> GS : controlloNomeUtente(tipo, nomeUtente)
+activate GS
+alt tipo = compratore
+    GS -> FC : ricercaUtente(nomeUtente)
+    activate FC
+    FC --> GS : esistenzaUtente
+    deactivate FC
+    alt esistenzaUtente = True
+        GS -> FC : rimuoviUtente(nomeUtente)
+        GS -> FT : rimozioneTransazione(nomeUtente)
+        activate FT
+        FT --> GS : strumentiRimossi
+        deactivate FT
+        GS -> FS : reinserisciStrumenti
+        GS --> PA : confermaRimozioneUtente
+        PA --> A : mostraMessaggio("Il compratore è stato rimosso")
+    else esistenzaUtente = false
+        GS --> PA : erroreRicerca
+        PA --> A : mostraErrore("Non esiste un compratore con questo nome")
+    end
+else tipo =venditore
+    GS -> FV : ricercaUtente(nomeUtente)
+    activate FV
+    FV --> GS : esistenzaUtente
+    deactivate FV
+    alt esistenzaUtente = True
+        GS -> FV : rimuoviUtente(nomeUtente)
+        GS -> FS : rimozioneStrumenti(nomeUtente)
+        GS --> PA : confermaRimozioneUtente
+        PA --> A : mostraMessaggio("Il venditore è stato rimosso")
+    else esistenzaUtente = false
+        GS --> PA : erroreRicerca
+        PA --> A : mostraErrore("Non esiste un venditore con questo nome")
+    end
+deactivate GS
+deactivate PA
+end
+@enduml

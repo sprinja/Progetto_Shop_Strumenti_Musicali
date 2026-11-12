@@ -1,0 +1,14 @@
+@startuml
+title ad AccessoAmministratore
+
+start
+:inserisceDati;
+:ricercaDati;
+if (dati validi) then (si)
+	:eseguiAccessoAmministratore;
+
+else (no)
+    :mostraErrore;
+endif
+end
+@enduml

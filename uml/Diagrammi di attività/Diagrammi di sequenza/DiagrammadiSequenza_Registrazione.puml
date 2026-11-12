@@ -1,0 +1,42 @@
+@startuml
+skinparam style strictuml
+skinparam sequenceMessageAlign center
+
+title sd RegistrazioneUtente
+
+actor ":Utente" as U
+participant ":InterfacciaRegistrazione" as IR <<control>>
+participant ":GestoreAccount" as GA <<boundary>>
+participant ":FileCompratori" as FC <<repository>>
+participant ":FileVenditori" as FV <<repository>>
+
+loop Fino a quando i dati non sono validi
+    U -> IR : inserisceDati(username, password, tipo)
+    activate IR
+    
+    IR -> GA : verificaRegistrazione(username, password)
+    activate GA
+        
+    alt Dati validi (password valida e username unico)
+        
+        alt tipo == "Compratore"
+        GA -> FC : registra(username, password) <<crea>>
+    
+        else tipo == "Venditore"
+        GA -> FV : registra(username, password) <<crea>>
+
+    end
+        
+        GA --> IR : confermaSuccesso
+        IR --> U : vaiAlLogin()
+        
+    else Password non valida o Username già esistente
+        GA --> IR : errore("Dati non validi")
+        IR --> U : mostraErrore("Reinserire dati")
+    end
+end    
+    deactivate GA
+    deactivate IR
+
+
+@enduml

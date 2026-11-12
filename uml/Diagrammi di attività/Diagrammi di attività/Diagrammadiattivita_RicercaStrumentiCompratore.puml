@@ -1,0 +1,14 @@
+@startuml
+title ad Ricerca Strumenti Compratore
+
+start
+:inserisciAttributo;
+:inserisciValoreAttributo;
+:ricercaStrumento;
+if (strumento trovato?) then (si)
+    :mostraStrumento;
+else (no)
+    :mostraErroreRicerca;
+endif
+end
+@enduml

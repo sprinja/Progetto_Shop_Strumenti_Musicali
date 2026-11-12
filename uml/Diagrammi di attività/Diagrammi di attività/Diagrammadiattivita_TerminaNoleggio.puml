@@ -1,0 +1,14 @@
+@startuml
+title ad Termina Noleggio
+
+start
+:inserisciIDStrumento;
+if (noleggio presente?) then (si)
+  :terminaNoleggio;
+  :reintrodurreStrumento;
+  :confermaTerminazione;
+else (no)
+  :noleggioNonPresente;
+endif
+end
+@enduml

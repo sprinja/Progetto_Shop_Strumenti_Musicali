@@ -1,0 +1,15 @@
+@startuml
+title ad InserimentoNuovoTipo
+
+start
+:inserireTipo;
+:inserireQuotaNoleggio;
+:controllareEsistenzaTipo;
+if (tipo esistente) then (si)
+    :mostraErroreTipoEsistente;
+else (no)
+    :creaTipo;
+    :confermaCreazione;
+endif
+end
+@enduml

@@ -1,0 +1,20 @@
+@startuml
+title ad Registrazione
+
+start
+:inserireDati;
+:controllareValiditaDati;
+while (dati validi) is (si)
+    
+    if (dati validi) then (si)
+        :creaNuovoUtente;
+        :confermaRegistrazione;
+        :vaiAlLogin;
+    else (no)
+        :mostraErroreRegistrazione;
+        :inserireDati;
+        :controllareValiditaDati;
+    endif
+endwhile (no)
+end
+@enduml

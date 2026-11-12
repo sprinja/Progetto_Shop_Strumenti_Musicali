@@ -1,0 +1,29 @@
+@startuml
+skinparam style strictuml
+skinparam sequenceMessageAlign center
+title sd ScadenzaNoleggio
+actor ":Tempo" as T 
+participant ":PaginaCompratore" as PC <<control>>
+participant ":PaginaVenditore" as PV <<control>>
+participant ":TimerNoleggi" as TN <<control>>
+participant ":GestoreShop" as GS <<boundary>>
+participant ":FileTransazioni" as FT <<repository>>
+participant ":FileStrumenti" as FS <<repository>>
+
+loop dataAttuale = dataScadenza
+    T -> TN : selezionaNoleggio(dataScadenza)
+    activate TN
+    TN -> GS : terminaNoleggio(dataScadenza)
+    activate GS
+    GS -> FT : terminaNoleggio (dataScadenza)
+    activate FT
+    FT --> GS : ritornaStrumento (idStrumento)
+    deactivate FT
+    GS -> FS : reinserireStrumento (idStrumento)
+    GS --> TN : confermaTerminazione
+    deactivate TN
+    GS --> PC : confermaTerminazione
+    GS --> PV : confermaTerminazione
+end
+
+@enduml

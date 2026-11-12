@@ -1,0 +1,33 @@
+@startuml
+title ad ModificaStrumenti
+
+start
+:selezionaStrumento;
+:controllaEsistenza;
+if (strumento esistente?) then (si)
+    :inserireModifica;
+    if (caratteristica == tipo) then (si)
+        :controlloEsistenzaTipo;
+        if (tipo esistente?) then (si)
+            :aggiornaTipo;
+            :mostraConfermaModifica;
+        else (no)
+            :mostraErroreTipo;
+        endif
+    else (no)
+        :modificaCaratteristica;
+        :mostraConfermaModifica;
+    endif
+    if (modifica riuscita?) then (si)
+        :verificaDuplicati;
+        if (esistenzaCopie?) then (si)
+            :incrementaQuantita;
+            :eliminaStrumento;
+            :mostraConfermaUniti;
+        endif
+    endif
+else (no)
+    :mostraErrore;
+endif
+end
+@enduml

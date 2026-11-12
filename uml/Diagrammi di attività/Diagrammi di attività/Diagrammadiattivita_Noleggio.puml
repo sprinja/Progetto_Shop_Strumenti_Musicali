@@ -1,0 +1,19 @@
+@startuml
+title ad Noleggio
+
+start
+:selezionaNoleggio;
+:controllaEsistenza;
+if (prodotto esistente?) then (si)
+    :verificaQuantitaDisponibile;
+    if (quantità disponibile?) then (si)
+        :aggiornaQuantitaNelCatalogo;
+        :mostraConfermaNoleggio;
+    else (no)
+        :mostraErroreQuantita;
+    endif
+else (no)
+    :mostraErroreID;
+endif   
+end
+@enduml

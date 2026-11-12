@@ -1,0 +1,28 @@
+@startuml
+title ad Rimozione Utenti
+
+start
+:inserisciTipoUtente;
+:inserisciNomeUtente;
+if (tipo) then (compratore)
+    :cercaUtente;
+    if (utente esiste?) then (si)
+        :rimuoviUtente;
+        :rimuoviTransazioni;
+        :riaggiungiStrumenti;
+        :confermaRimozioneUtente;
+    else (no)
+        :mostraErrore;
+    endif
+else (venditore)
+    :cercaUtente;
+    if (utente esiste?) then (si)
+        :rimuoviUtente;
+        :rimuoviStrumenti;
+        :confermaRimozioneUtente;
+    else (no)
+        :mostraErrore;
+    endif
+endif
+end
+@enduml

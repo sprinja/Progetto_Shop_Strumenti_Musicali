@@ -1,0 +1,16 @@
+@startuml
+title ad Rimozione Strumenti Venditore
+
+start
+:inserisciNomeUtente;
+:inserisciIDStrumento;
+:verificaPresenzaVenditore;
+:verificaEsistenzaStrumento;
+if (strumento trovato?) then (si)
+    :rimuoviStrumento;
+    :confermaRimozione;
+else (no)
+    :mostraErrore;
+endif
+end
+@enduml

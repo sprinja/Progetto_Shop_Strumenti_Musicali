@@ -1,0 +1,19 @@
+@startuml
+title ad Ricerca Strumenti Venditore
+
+start
+:inserisciAttributo;
+:inserisciValoreAttributo;
+:ricercaStrumento;
+:verificaIdUtente;
+if (idUtente esiste?) then (si)
+    if (strumento trovato?) then (si)
+        :mostraStrumento;
+    else (no)
+        :mostraErroreRicerca;
+    endif
+else (no)
+    :mostraErroreRicerca;
+endif
+end
+@enduml

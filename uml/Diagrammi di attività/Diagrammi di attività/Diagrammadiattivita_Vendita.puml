@@ -1,0 +1,20 @@
+@startuml
+title ad Vendita
+
+start
+:inserisciStrumento;
+:controllaEsistenzaTipo;
+if (tipo esiste?) then (si)
+    :controllaEsistenzaStrumento;
+    if (strumento esiste?) then (si)
+        :aggiornaStrumento;
+        :confermaModifica;
+    else (no)
+        :aggiungiStrumento;
+        :confermaAggiunta;
+    endif
+else (no)
+    :mostraErrore;
+endif
+end
+@enduml
