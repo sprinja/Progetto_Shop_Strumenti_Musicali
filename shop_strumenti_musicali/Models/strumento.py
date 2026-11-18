@@ -91,8 +91,8 @@ class Strumento:
 
     def setPrezzo(self, v) -> None:
         p = float(str(v).replace(",", ".")) # rende il prezzo un float, sostituendo eventuali virgole con punti
-        if p < 0:   # se il prezzo è negativo, errore
-            raise ValueError("il prezzo non puo' essere negativo")
+        if p <= 0:   # se il prezzo è negativo o zero, errore
+            raise ValueError("il prezzo deve essere maggiore di zero")
         self._prezzo = p
 
     def setPrezzoNoleggioGiornaliero(self, v) -> None:
