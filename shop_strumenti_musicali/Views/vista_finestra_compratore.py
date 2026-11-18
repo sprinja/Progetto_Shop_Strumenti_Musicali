@@ -34,7 +34,7 @@ class VistaFinestraCompratore(QWidget):
         rigaRicerca = QHBoxLayout() # layout per la riga contenente il menù a tendina per la ricerca e il campo di testo
         rigaRicerca.addWidget(QLabel("Cerca per:"))
         self.combo_caratteristica_ricerca = QComboBox()   # menù a tendina per scegliere la caratteristica per cui cercare
-        self.combo_caratteristica_ricerca.addItems(["tipo", "prezzo", "azienda", "nome"])
+        self.combo_caratteristica_ricerca.addItems(["tipo", "prezzo massimo", "azienda", "nome"])
         rigaRicerca.addWidget(self.combo_caratteristica_ricerca)
         self.txt_ricerca = QLineEdit()   # campo di testo per inserire il valore da cercare
         self.txt_ricerca.setPlaceholderText("es. chitarra")  # esempio di valore di ricerca valido
@@ -109,7 +109,7 @@ class VistaFinestraCompratore(QWidget):
     def cerca_strumenti(self):
         criterio = self.combo_caratteristica_ricerca.currentText()  # ottiene il criterio di ricerca selezionato nel menù a tendina
         valore = self.txt_ricerca.text().strip()   # ottiene il valore da cercare e rimuove spazi bianchi all'inizio e alla fine
-        if (criterio == "prezzo" and valore and not controllaNumero(self.txt_ricerca, False, "prezzo massimo")):  # se il criterio è il prezzo e il valore non è un numero valido, errore
+        if (criterio == "prezzo massimo" and valore and not controllaNumero(self.txt_ricerca, False, "prezzo massimo")):  # se il criterio è il prezzo e il valore non è un numero valido, errore
             return
         self._aggiornaStrumenti()   # aggiorna la lista degli strumenti
         if valore and not self._strumenti:  # se il valore è stato inserito ma non è stato trovato nessuno strumento, scrive che non è stato trovato nessuno strumento
@@ -125,12 +125,12 @@ class VistaFinestraCompratore(QWidget):
 
     # metodo per aggiornare il suggerimento nel campo di ricerca in base al criterio selezionato
     def aggiornaPlaceholderRicerca(self):
-        suggerimenti = {"tipo": "es. chitarra", "prezzo": "prezzo massimo in euro: es. 450", "azienda": "es. Yamaha", "nome": "es. Stratocaster"}  # dizionario con i suggerimenti per ogni criterio di ricerca
+        suggerimenti = {"tipo": "es. chitarra", "prezzo massimo": "prezzo massimo in euro: es. 450", "azienda": "es. Yamaha", "nome": "es. Stratocaster"}  # dizionario con i suggerimenti per ogni criterio di ricerca
         criterio = self.combo_caratteristica_ricerca.currentText()  # ottiene il criterio di ricerca selezionato nel menù a tendina
         self.txt_ricerca.setPlaceholderText(suggerimenti.get(criterio, ""))   # imposta il suggerimento nel campo di testo in base al criterio selezionato
-        if criterio == "prezzo":    # se il criterio è il prezzo, imposta un validatore per il campo di testo
+        if criterio == "prezzo massimo":    # se il criterio è il prezzo massimo, imposta un validatore per il campo di testo
             self.txt_ricerca.setValidator(QDoubleValidator(0.0, 999999.0, 2, self))  # imposta un validatore per il campo di testo che consente solo numeri decimali compresi tra 0 e 999999
-        else:   # altrimenti, se il criterio non è il prezzo, non imposta nessun validatore
+        else:   # altrimenti, se il criterio non è il prezzo massimo, non imposta nessun validatore
             self.txt_ricerca.setValidator(None)
 
     # metodo per aprire la finestra di acquisto dello strumento selezionato
@@ -180,7 +180,7 @@ class VistaFinestraCompratore(QWidget):
     def _aggiornaStrumenti(self):
         criterio = self.combo_caratteristica_ricerca.currentText()  # ottiene il criterio di ricerca selezionato nel menù a tendina
         valore = self.txt_ricerca.text().strip()   # ottiene il valore da cercare e rimuove spazi bianchi all'inizio e alla fine
-        if valore and criterio == "prezzo" and not numeroValido(valore):  # se il criterio è il prezzo e il valore non è un numero valido, azzera il valore
+        if valore and criterio == "prezzo massimo" and not numeroValido(valore):  # se il criterio è il prezzo massimo e il valore non è un numero valido, azzera il valore
             valore = ""
         if valore:  # se il valore non è vuoto, cerca gli strumenti nel catalogo con il criterio e il valore inseriti
             self._strumenti = self._catalogo.cercaStrumenti(criterio, valore)
