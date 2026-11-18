@@ -74,7 +74,7 @@ class BoundaryCompratore:
         if scelta is None:   # se l'utente non sceglie nessuno strumento, esce dal metodo
             return
         quantita = chiediIntero("Quantita'> ", minimo=1)    # chiede all'utente la quantità di strumenti da noleggiare
-        durata = chiediIntero("Durata (giorni)> ", minimo=1)    # chiede all'utente la durata del noleggio in giorni
+        durata = chiediIntero("Durata (giorni)> ", minimo=1, massimo=3650)    # chiede all'utente la durata del noleggio in giorni, fino a un massimo di 3650 giorni (10 anni)
         costo_massimo = round(scelta.getPrezzoNoleggioGiornaliero() * durata, 2)    # calcola il costo massimo del noleggio: prezzo di noleggio giornaliero per la durata
         print("Strumento selezionato (il prezzo di noleggio giornaliero e' l'ultimo valore indicato nella riga):")
         print(f"  {scelta}")
@@ -98,7 +98,7 @@ class BoundaryCompratore:
         if noleggio is None:    # se il noleggio non è stato trovato, stampa un messaggio di errore
             print("Non hai questo noleggio a tuo carico")
             return
-        print(chiama(self._gestore_noleggi.terminaNoleggio, self._compratore.getUsername(), noleggio.getStrumento().get("id")))    # chiama il metodo del gestore noleggi per terminare il noleggio e stampa l'esito
+        print(chiama(self._gestore_noleggi.terminaNoleggio, self._compratore.getUsername(), noleggio.getId()))    # chiama il metodo del gestore noleggi per terminare il noleggio scelto e stampa l'esito
 
     # metodo per il menu della cronologia acquisti e noleggi
     def menu_cronologia(self):

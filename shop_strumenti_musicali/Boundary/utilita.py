@@ -22,7 +22,7 @@ def aDecimale(testo):
         return None
 
 # metodo per chiedere all'utente un numero intero finché non inserisce un valore valido
-def chiediIntero(domanda, minimo=None, predefinito=None):
+def chiediIntero(domanda, minimo=None, predefinito=None, massimo=None):
     while True:    # ciclo per chiedere il numero finché l'utente non inserisce un valore valido
         risposta = input(domanda).strip()   # legge la risposta dell'utente e rimuove spazi bianchi all'inizio e alla fine
         if not risposta:    # se la risposta è vuota, ritorna il valore predefinito se c'è, altrimenti chiede di scrivere un numero
@@ -36,6 +36,9 @@ def chiediIntero(domanda, minimo=None, predefinito=None):
             continue
         if minimo is not None and valore < minimo:  # se il numero è inferiore al minimo richiesto, errore
             print(f"Il numero deve essere almeno {minimo}.")
+            continue
+        if massimo is not None and valore > massimo:  # se il numero è superiore al massimo richiesto, errore
+            print(f"Il numero deve essere al massimo {massimo}.")
             continue
         return valore   # ritorna il numero intero inserito dall'utente
 
