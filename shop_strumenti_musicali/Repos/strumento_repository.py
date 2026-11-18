@@ -69,7 +69,7 @@ class StrumentoRepository:
         if not testo:   # se il valore è vuoto, restituisce tutti gli strumenti
             return self.tutti()
         criterio = (criterio or "").strip().lower() # converte il criterio in stringa, rimuove gli spazi bianchi iniziali e finali e lo converte in minuscolo
-        if criterio == "prezzo":    # se il criterio è "prezzo", cerca gli strumenti con prezzo minore o uguale al valore specificato
+        if criterio == "prezzo massimo":    # se il criterio è "prezzo massimo", cerca gli strumenti con prezzo minore o uguale al valore specificato
             try:
                 prezzo = float(testo.replace(",", ".")) # converte il valore in float, sostituendo eventuali virgole con punti
             except ValueError:
