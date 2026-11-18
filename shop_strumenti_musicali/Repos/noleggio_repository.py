@@ -22,6 +22,8 @@ class NoleggioRepository:
                     self._noleggi[i["id"]] = Noleggio.fromDict(i, compratore)
         except FileNotFoundError:
             self._noleggi = {}  # se il file non esiste, inizializza un dizionario vuoto
+        except (json.JSONDecodeError, KeyError, TypeError, ValueError, UnicodeDecodeError) as e:   # se il file è corrotto o contiene dati non validi, interrompe l'avvio con un messaggio chiaro senza sovrascriverlo
+            raise SystemExit(f"File dati non leggibile: {self._path} ({e}) - ripristina il file o eliminalo per ripartire con dati vuoti")
 
     # metodo che salva i dati dei noleggi nel file JSON
     def salva(self) -> None:

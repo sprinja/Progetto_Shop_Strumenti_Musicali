@@ -16,6 +16,8 @@ class AmministratoreRepository:
             self._amministratori = {i["username"]: Amministratore.fromDict(i) for i in dati}  # crea un dizionario di oggetti Amministratore a partire dai dati caricati
         except FileNotFoundError:   # se il file non esiste, inizializza un dizionario vuoto
             self._amministratori = {}
+        except (json.JSONDecodeError, KeyError, TypeError, ValueError, UnicodeDecodeError) as e:   # se il file è corrotto o contiene dati non validi, interrompe l'avvio con un messaggio chiaro senza sovrascriverlo
+            raise SystemExit(f"File dati non leggibile: {self._path} ({e}) - ripristina il file o eliminalo per ripartire con dati vuoti")
 
     # metodo che trova un amministratore per username
     def trovaPerUsername(self, username: str):

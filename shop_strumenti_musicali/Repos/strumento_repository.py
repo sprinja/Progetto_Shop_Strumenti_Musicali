@@ -24,6 +24,8 @@ class StrumentoRepository:
                 self._strumenti[i["id"]] = Strumento.fromDict(i, categoria) # crea un oggetto Strumento a partire dai dati caricati e dalla categoria trovata
         except FileNotFoundError:
             self._strumenti = {}    # se il file non esiste, inizializza un dizionario vuoto
+        except (json.JSONDecodeError, KeyError, TypeError, ValueError, UnicodeDecodeError) as e:   # se il file è corrotto o contiene dati non validi, interrompe l'avvio con un messaggio chiaro senza sovrascriverlo
+            raise SystemExit(f"File dati non leggibile: {self._path} ({e}) - ripristina il file o eliminalo per ripartire con dati vuoti")
 
     # metodo che salva i dati degli strumenti nel file JSON
     def salva(self) -> None:

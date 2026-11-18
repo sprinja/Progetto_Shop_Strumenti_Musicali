@@ -16,6 +16,8 @@ class VenditoreRepository:
             self._venditori = {i["username"]: Venditore.fromDict(i) for i in dati}  # crea un dizionario di oggetti Venditore a partire dai dati caricati
         except FileNotFoundError:   # se il file non esiste, inizializza un dizionario vuoto
             self._venditori = {}
+        except (json.JSONDecodeError, KeyError, TypeError, ValueError, UnicodeDecodeError) as e:   # se il file è corrotto o contiene dati non validi, interrompe l'avvio con un messaggio chiaro senza sovrascriverlo
+            raise SystemExit(f"File dati non leggibile: {self._path} ({e}) - ripristina il file o eliminalo per ripartire con dati vuoti")
 
     # metodo che salva i dati dei venditori nel file JSON
     def salva(self) -> None:

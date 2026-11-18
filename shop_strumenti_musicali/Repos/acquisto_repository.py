@@ -22,6 +22,8 @@ class AcquistoRepository:
                     self._acquisti[i["id"]] = Acquisto.fromDict(i, compratore)
         except FileNotFoundError:
             self._acquisti = {} # se il file non esiste, inizializza un dizionario vuoto
+        except (json.JSONDecodeError, KeyError, TypeError, ValueError, UnicodeDecodeError) as e:   # se il file è corrotto o contiene dati non validi, interrompe l'avvio con un messaggio chiaro senza sovrascriverlo
+            raise SystemExit(f"File dati non leggibile: {self._path} ({e}) - ripristina il file o eliminalo per ripartire con dati vuoti")
 
     # metodo che salva i dati degli acquisti nel file JSON
     def salva(self) -> None:

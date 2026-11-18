@@ -16,6 +16,8 @@ class CategoriaRepository:
             self._categorie = {d["nome_tipo"]: CategoriaStrumento.fromDict(d) for d in dati}    # crea un dizionario di oggetti CategoriaStrumento a partire dai dati caricati
         except FileNotFoundError:   # se il file non esiste, inizializza un dizionario vuoto
             self._categorie = {}
+        except (json.JSONDecodeError, KeyError, TypeError, ValueError, UnicodeDecodeError) as e:   # se il file è corrotto o contiene dati non validi, interrompe l'avvio con un messaggio chiaro senza sovrascriverlo
+            raise SystemExit(f"File dati non leggibile: {self._path} ({e}) - ripristina il file o eliminalo per ripartire con dati vuoti")
 
     # metodo per salvare le categorie in un file JSON
     def salva(self) -> None:
