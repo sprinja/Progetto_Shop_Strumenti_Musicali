@@ -2,7 +2,7 @@ from Models import CategoriaStrumento, Strumento
 from Repos import StrumentoRepository, CategoriaRepository
 
 class GestoreCatalogo:
-    CRITERI_RICERCA = ("tipo", "prezzo", "azienda", "nome", "venditore")
+    CRITERI_RICERCA = ("tipo", "prezzo massimo", "azienda", "nome", "venditore")
 
     # costruttore
     def __init__(self, strumento_repo: StrumentoRepository, categoria_repo: CategoriaRepository):
