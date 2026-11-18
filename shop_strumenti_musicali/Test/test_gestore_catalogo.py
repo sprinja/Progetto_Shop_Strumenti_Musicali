@@ -208,7 +208,7 @@ class TestGestoreCatalogo(unittest.TestCase):
     # Verifica la ricerca multi-criterio con esclusione degli strumenti non disponibili
     def test_cerca_strumenti(self):
         self.assertEqual(len(self.gestore.cercaStrumenti("nome", "elettrica")), 1)
-        self.assertEqual(len(self.gestore.cercaStrumenti("prezzo", "500")), 1)
+        self.assertEqual(len(self.gestore.cercaStrumenti("prezzo massimo", "500")), 1)
         self.assertEqual(len(self.gestore.cercaStrumenti("tipo", "chit")), 1)
         self.assertEqual(len(self.gestore.cercaStrumenti("venditore", "mario")), 1)
         self.assertEqual(len(self.gestore.cercaStrumenti("nome", "violino")), 0)
