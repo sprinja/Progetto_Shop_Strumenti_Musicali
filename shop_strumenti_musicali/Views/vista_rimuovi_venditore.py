@@ -19,6 +19,7 @@ class VistaRimuoviVenditore(QWidget):
         layout.addWidget(QLabel("Venditori registrati (clicca quello da eliminare):"))
         self.list_venditori = QListWidget()   # lista per visualizzare i venditori registrati
         elenco = self._gestore.elencaVenditori()  # ottiene l'elenco dei venditori registrati
+        self._elenco = elenco    # salva l'elenco mostrato in lista, così la selezione usa sempre le righe visibili
         for i in elenco:    # ciclo per aggiungere ogni venditore registrato alla lista
             self.list_venditori.addItem(str(i))
         if not elenco:  # se non ci sono venditori registrati, segnalalo nella lista
@@ -49,7 +50,7 @@ class VistaRimuoviVenditore(QWidget):
 
     # metodo chiamato quando si clicca una riga della lista, aggiorna il venditore selezionato
     def _selezionaRiga(self, riga: int):
-        elenco = self._gestore.elencaVenditori()  # ottiene l'elenco dei venditori registrati
+        elenco = self._elenco   # usa l'elenco mostrato in lista, così la riga cliccata corrisponde sempre all'elemento visibile
         self._elemento = elenco[riga] if 0 <= riga < len(elenco) else None    # prende il venditore della riga cliccata, oppure nessuno se la riga non è valida
         self._aggiornaSelezione()
 

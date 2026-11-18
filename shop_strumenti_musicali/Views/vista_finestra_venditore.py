@@ -192,8 +192,8 @@ class VistaFinestraVenditore(QWidget):
             valore = ""
         if valore:  # se il valore non è vuoto, cerca i tuoi strumenti nel catalogo con il criterio e il valore inseriti
             self._strumenti = self._catalogo.cercaStrumenti(criterio, valore, self._venditore.getUsername())
-        else:   # altrimenti, se il valore è vuoto, elenca tutti i tuoi strumenti
-            self._strumenti = self._catalogo.elencaStrumenti(id_venditore=self._venditore.getUsername())
+        else:   # altrimenti, se il valore è vuoto, elenca tutti i tuoi strumenti, anche quelli esauriti
+            self._strumenti = self._catalogo.elencaStrumenti(True, self._venditore.getUsername())
         self.list_miei_strumenti.clear()    # svuota la lista dei tuoi strumenti
         for i in self._strumenti:  # ciclo per aggiungere ogni tuo strumento alla lista
             self.list_miei_strumenti.addItem(str(i))

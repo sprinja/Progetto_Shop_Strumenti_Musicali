@@ -58,7 +58,7 @@ class VistaAggiungiStrumento(QWidget):
         layout.addLayout(riga5) # aggiunge la riga contenente il prezzo di acquisto dello strumento al layout principale
         self.txt_prezzo_noleggio = QLineEdit()  # campo di testo per inserire il prezzo di noleggio giornaliero dello strumento da aggiungere
         self.txt_prezzo_noleggio.setPlaceholderText("es. 0,90 (default: quota del tipo x prezzo di acquisto)")
-        self.txt_prezzo_noleggio.setValidator(QDoubleValidator(0.0, 99999.0, 2, self))  # imposta un validatore per il campo di testo che consente solo numeri decimali compresi tra 0.0 e 99999.0 con massimo 2 cifre decimali
+        self.txt_prezzo_noleggio.setValidator(QDoubleValidator(0.0, 999999.0, 2, self))  # imposta un validatore per il campo di testo che consente solo numeri decimali compresi tra 0.0 e 999999.0 con massimo 2 cifre decimali, come il prezzo di acquisto
         riga6 = QHBoxLayout()   # layout per la riga contenente l'etichetta e il campo di testo per inserire il prezzo di noleggio giornaliero dello strumento
         riga6.addWidget(QLabel("Prezzo di noleggio giornaliero:"))
         riga6.addWidget(self.txt_prezzo_noleggio)
@@ -95,6 +95,9 @@ class VistaAggiungiStrumento(QWidget):
                 prezzo = float(testo_prezzo.replace(",", "."))  # converte il prezzo di acquisto in un numero decimale, sostituendo eventuali virgole con punti
             except ValueError:  # se il prezzo di acquisto non è un numero valido, lo imposta a None
                 prezzo = None
+        if not testo_prezzo:    # se il prezzo di acquisto non è ancora stato inserito, mostra un suggerimento invece di un errore
+            self.label_stima_noleggio.setText("Inserisci il prezzo di acquisto per vedere la stima del noleggio")
+            return
         if categoria is None or prezzo is None: # se il tipo di strumento selezionato non esiste o il prezzo di acquisto non è valido, errore
             self.label_stima_noleggio.setText("Errore: seleziona un tipo valido e inserisci un prezzo di acquisto valido")
             return

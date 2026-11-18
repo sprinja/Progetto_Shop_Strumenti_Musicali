@@ -54,7 +54,7 @@ class VistaAccesso(QWidget):
     def esegui_login(self):
         tipo = self.combo_tipo_utente.currentText() # ottiene il tipo di utente selezionato nella combobox
         username = self.txt_username.text().strip() # ottiene il nome utente inserito e rimuove spazi bianchi all'inizio e alla fine del nome utente inserito
-        password = self.txt_password.text() # ottiene la password inserita
+        password = self.txt_password.text().strip() # ottiene la password inserita e rimuove spazi bianchi all'inizio e alla fine
         if not username or not password:    # se il nome utente o la password sono vuoti, errore
             QMessageBox.warning(self, "Attenzione", "Inserisci nome utente e password")
             return
@@ -73,10 +73,10 @@ class VistaAccesso(QWidget):
     def registra_utente(self):
         tipo = self.combo_tipo_utente.currentText() # ottiene il tipo di utente selezionato nella combobox
         if tipo == "Amministratore":    # se il tipo di utente è amministratore, errore perchè non ci si può registrare come amministratore
-            QMessageBox.warning(self, "Attenzione! Non e' possibile registrarsi come amministratore:\n le credenziali devono essere note a priori")
+            QMessageBox.warning(self, "Attenzione", "Non e' possibile registrarsi come amministratore:\n le credenziali devono essere note a priori")
             return
         username = self.txt_username.text().strip() # ottiene il nome utente inserito e rimuove spazi bianchi all'inizio e alla fine del nome utente inserito
-        password = self.txt_password.text() # ottiene la password inserita
+        password = self.txt_password.text().strip() # ottiene la password inserita e rimuove spazi bianchi all'inizio e alla fine
         esito = self._gestore_utenti.verificaRegistrazione(tipo, username, password)    # verifica la validità dei dati inseriti per la registrazione
         self.label_esito.setText(esito) # visualizza l'esito della registrazione
         if esito.startswith("Errore"):  # se l'esito della registrazione inizia con Errore, visualizza un messaggio di errore

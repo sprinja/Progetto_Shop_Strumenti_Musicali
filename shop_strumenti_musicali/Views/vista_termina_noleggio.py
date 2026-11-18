@@ -25,8 +25,8 @@ class VistaTerminaNoleggio(QWidget):
         riga = QHBoxLayout()   # layout per la riga contenente l'etichetta e il menù a tendina per scegliere il noleggio da terminare
         riga.addWidget(QLabel("Noleggio da terminare:"))
         self.combo_noleggio_da_terminare = QComboBox()   # menù a tendina per selezionare il noleggio da terminare
-        for i in self._noleggi:    # ciclo per aggiungere al menù a tendina l'id dello strumento di ogni noleggio attivo
-            self.combo_noleggio_da_terminare.addItem(i.getStrumento().get("id"), i.getStrumento().get("id")) # sia il testo mostrato sia il dato associato all'elemento del menù a tendina è l'id dello strumento noleggiato
+        for i in self._noleggi:    # ciclo per aggiungere al menù a tendina ogni noleggio attivo
+            self.combo_noleggio_da_terminare.addItem(i.getStrumento().get("id"), i.getId()) # il testo mostrato è l'id dello strumento, il dato associato è l'id del noleggio da terminare
         riga.addWidget(self.combo_noleggio_da_terminare)    # aggiunge il menù a tendina alla riga
         layout.addLayout(riga) # aggiunge la riga contenente il menù a tendina al layout principale
         layout.addWidget(QLabel("Terminando il noleggio prima della scadenza verrai rimborsato della somma extra pagata."))    # etichetta per avvisare che terminando il noleggio prima della scadenza si viene rimborsati della somma extra pagata
@@ -52,24 +52,24 @@ class VistaTerminaNoleggio(QWidget):
         noleggio = next((i for i in self._noleggi if str(i) == item.text()), None)    # cerca il noleggio corrispondente alla riga cliccata, confrontando il testo della riga con la descrizione di ogni noleggio
         if noleggio is None:    # se la riga cliccata non corrisponde ad alcun noleggio, non fa nulla
             return
-        indice = self.combo_noleggio_da_terminare.findData(noleggio.getStrumento().get("id"))   # cerca nel menù a tendina l'id dello strumento del noleggio cliccato
+        indice = self.combo_noleggio_da_terminare.findData(noleggio.getId())   # cerca nel menù a tendina l'id del noleggio cliccato
         if indice >= 0:    # se il noleggio è stato trovato nel menù a tendina, lo seleziona
             self.combo_noleggio_da_terminare.setCurrentIndex(indice)
 
     # metodo per confermare la terminazione del noleggio selezionato nel menù a tendina
     def conferma_termina_noleggio(self):
-        id_strumento = self.combo_noleggio_da_terminare.currentData()  # ottiene l'id dello strumento del noleggio selezionato nel menù a tendina
-        if not id_strumento:    # se non è stato selezionato nessun noleggio, errore
+        id_noleggio = self.combo_noleggio_da_terminare.currentData()  # ottiene l'id del noleggio selezionato nel menù a tendina
+        if not id_noleggio:    # se non è stato selezionato nessun noleggio, errore
             QMessageBox.warning(self, "Attenzione", "Seleziona un noleggio")
             return
-        risposta = QMessageBox.question(self, "Conferma", f"Confermi di terminare il noleggio dello strumento {id_strumento}?", QMessageBox.Yes | QMessageBox.No)   # mostra un messaggio di conferma per la terminazione del noleggio selezionato
+        risposta = QMessageBox.question(self, "Conferma", f"Confermi di terminare il noleggio {id_noleggio}?", QMessageBox.Yes | QMessageBox.No)   # mostra un messaggio di conferma per la terminazione del noleggio selezionato
         if risposta == QMessageBox.Yes: # se la risposta è positiva, termina il noleggio
             self.registra_termina_noleggio()
 
     # metodo per registrare la terminazione del noleggio selezionato
     def registra_termina_noleggio(self):
-        id_strumento = self.combo_noleggio_da_terminare.currentData()
-        esito = self._gestore.terminaNoleggio(self._compratore.getUsername(), id_strumento) # chiama il metodo del gestore noleggi per terminare il noleggio selezionato
+        id_noleggio = self.combo_noleggio_da_terminare.currentData()
+        esito = self._gestore.terminaNoleggio(self._compratore.getUsername(), id_noleggio) # chiama il metodo del gestore noleggi per terminare il noleggio selezionato
         self.label_esito.setText(esito) # visualizza l'esito della terminazione nella finestra di terminazione noleggio
         self._callback()    # aggiorna la lista dei noleggi attivi nella finestra principale
         if not esito.startswith("Errore"):  # se il noleggio è stato terminato correttamente, chiude la finestra di terminazione noleggio

@@ -19,6 +19,7 @@ class VistaRimuoviStrumento(QWidget):
         layout.addWidget(QLabel("Strumenti presenti nello shop (clicca quello da eliminare):"))
         self.list_strumenti = QListWidget()   # lista per visualizzare gli strumenti presenti nello shop
         elenco = self._gestore.elencaStrumenti()  # ottiene l'elenco degli strumenti presenti nello shop
+        self._elenco = elenco    # salva l'elenco mostrato in lista, così la selezione usa sempre le righe visibili
         for i in elenco:    # ciclo per aggiungere ogni strumento alla lista
             self.list_strumenti.addItem(str(i))
         if not elenco:  # se non ci sono strumenti nello shop, segnalalo nella lista
@@ -48,7 +49,7 @@ class VistaRimuoviStrumento(QWidget):
 
     # metodo chiamato quando si clicca una riga della lista, aggiorna lo strumento selezionato
     def _selezionaRiga(self, riga: int):
-        elenco = self._gestore.elencaStrumenti()  # ottiene l'elenco degli strumenti presenti nello shop
+        elenco = self._elenco   # usa l'elenco mostrato in lista, così la riga cliccata corrisponde sempre all'elemento visibile
         self._elemento = elenco[riga] if 0 <= riga < len(elenco) else None    # prende lo strumento della riga cliccata, oppure nessuno se la riga non è valida
         self._aggiornaSelezione()
 

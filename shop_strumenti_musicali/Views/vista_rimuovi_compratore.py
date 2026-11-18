@@ -19,6 +19,7 @@ class VistaRimuoviCompratore(QWidget):
         layout.addWidget(QLabel("Compratori registrati (clicca quello da eliminare):"))
         self.list_compratori = QListWidget()    # lista per visualizzare i compratori registrati
         elenco = self._gestore.elencaCompratori()   # ottiene l'elenco dei compratori registrati
+        self._elenco = elenco    # salva l'elenco mostrato in lista, così la selezione usa sempre le righe visibili
         for i in elenco:    # ciclo per aggiungere ogni compratore registrato alla lista
             self.list_compratori.addItem(str(i))
         if not elenco:  # se non ci sono compratori registrati, segnalalo nella lista
@@ -49,7 +50,7 @@ class VistaRimuoviCompratore(QWidget):
 
     # metodo chiamato quando si clicca una riga della lista, aggiorna il compratore selezionato
     def _selezionaRiga(self, riga: int):
-        elenco = self._gestore.elencaCompratori()   # ottiene l'elenco dei compratori registrati
+        elenco = self._elenco   # usa l'elenco mostrato in lista, così la riga cliccata corrisponde sempre all'elemento visibile
         self._elemento = elenco[riga] if 0 <= riga < len(elenco) else None    # prende il compratore della riga cliccata, oppure nessuno se la riga non è valida
         self._aggiornaSelezione()
 

@@ -23,8 +23,9 @@ class Applicazione:
             nuova = VistaFinestraAmministratore(utente, self._gestori["amministratore"], self.apri, self._gestori["noleggi"], self._intervallo_timer)
         else:   # se non è un tipo valido, errore
             raise ValueError(f"tipo di pagina sconosciuto: {tipo}")
-        if self._vista is not None: # se c'è già una vista aperta chiudila
-            self._vista.close()
+        for w in self._app.topLevelWidgets():   # chiude la finestra aperta in precedenza e anche ogni finestra secondaria rimasta aperta, per non lasciarne attive con la vecchia sessione
+            if w is not nuova:
+                w.close()
         self._vista = nuova
         self._vista.show()  # mostra la nuova vista
 
