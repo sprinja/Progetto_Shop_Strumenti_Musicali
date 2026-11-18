@@ -62,7 +62,7 @@ class GestoreAmministratore:
         if compratore is None:  # se non esiste un compratore con l'username fornito, errore
             return "Errore: non esiste un compratore con questo nome utente"
         for noleggio in list(self._noleggio_repo.attiviPerCompratore(username)):    # per ogni noleggio attivo del compratore, termina il noleggio e restituisce lo strumento
-            self._gestore_noleggi.terminaNoleggio(username, noleggio.getStrumento().get("id"))
+            self._gestore_noleggi.terminaNoleggio(username, noleggio.getId())
         acquisti = self._acquisto_repo.rimuoviPerUtente(username)   # rimuove tutti gli acquisti del compratore
         noleggi = self._noleggio_repo.rimuoviPerUtente(username)    # rimuove tutti i noleggi del compratore
         self._compratore_repo.rimuovi(username) # rimuove il compratore dalla repository

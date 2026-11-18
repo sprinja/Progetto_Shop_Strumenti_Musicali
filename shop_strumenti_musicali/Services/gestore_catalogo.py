@@ -11,9 +11,10 @@ class GestoreCatalogo:
 
     # elenca gli strumenti, se id_venditore è fornito, filtra gli strumenti per venditore, in modo che i venditori possano vedere solo i propri strumenti
     def elencaStrumenti(self, inc_nondisp: bool = False, id_venditore: str = None) -> list:
-        if inc_nondisp: # se inc_nondisp è True, restituisce tutti gli strumenti, altrimenti solo quelli disponibili
-            return self._strumento_repo.tutti()
-        strumenti = [i for i in self._strumento_repo.tutti() if i.isDisponibile()]  # filtra gli strumenti disponibili
+        if inc_nondisp: # se inc_nondisp è True, considera tutti gli strumenti, altrimenti solo quelli disponibili
+            strumenti = self._strumento_repo.tutti()
+        else:
+            strumenti = [i for i in self._strumento_repo.tutti() if i.isDisponibile()]  # filtra gli strumenti disponibili
         if id_venditore:    # se id_venditore è fornito, filtra gli strumenti per venditore, in modo che i venditori possano vedere solo i propri strumenti
             strumenti = [i for i in strumenti if i.getVenditore() == id_venditore]
         return strumenti
@@ -153,6 +154,6 @@ class GestoreCatalogo:
         for i in self._strumento_repo.tutti():  # itera su tutti gli strumenti del catalogo
             if i.getId() == strumento.getId():
                 continue    # salta lo strumento che ha lo stesso ID (se stesso)
-            if (i.getNome().lower() == strumento.getNome().lower() and i.getTipo() == strumento.getTipo() and i.getAzienda().lower() == strumento.getAzienda().lower() and i.getVenditore() == strumento.getVenditore()):
-                return i    # se trova uno strumento uguale lo ritorna
+            if (i.getNome().lower() == strumento.getNome().lower() and i.getTipo() == strumento.getTipo() and i.getAzienda().lower() == strumento.getAzienda().lower() and i.getVenditore() == strumento.getVenditore() and i.getPrezzo() == strumento.getPrezzo()):
+                return i    # se trova uno strumento uguale, con lo stesso prezzo incluso, lo ritorna
         return None

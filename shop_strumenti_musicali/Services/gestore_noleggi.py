@@ -26,6 +26,8 @@ class GestoreNoleggi:
             return "Errore: la quantita' deve essere maggiore di zero"
         if durata < 1:  # se la durata è minore di 1 giorno, errore
             return "Errore: la durata del noleggio deve essere di almeno 1 giorno"
+        if durata > 3650:   # se la durata supera il massimo consentito di 3650 giorni (10 anni), errore
+            return "Errore: la durata massima del noleggio e' di 3650 giorni"
         if strumento.getQuantita() < q: # se la quantita richiesta è maggiore della quantita disponibile dello strumento, errore
             return (f"Errore: quantita' non disponibile (disponibili {strumento.getQuantita()})")
         temp = strumento.toDict()   # crea un dizionario con le informazioni dello strumento al momento del noleggio
@@ -36,17 +38,20 @@ class GestoreNoleggi:
         return (f"Noleggio registrato fino al {noleggio.getDataFine()} (costo massimo {noleggio.calcolaCostoMassimo():.2f} €): {noleggio}")
 
     # termina un noleggio 
-    def terminaNoleggio(self, id_compratore: str, id_strumento: str) -> str:
+    def terminaNoleggio(self, id_compratore: str, id_noleggio: str) -> str:
         for noleggio in self._noleggio_repo.perCompratore(id_compratore):   # itera sui noleggi del compratore corrispondente all'id fornito
-            if noleggio.isAttivo() and noleggio.getStrumento().get("id") == id_strumento:   # se il noleggio è attivo e lo strumento corrisponde all'id fornito, termina il noleggio
+            if noleggio.isAttivo() and noleggio.getId() == id_noleggio:   # se il noleggio è attivo e corrisponde all'id fornito, termina quel noleggio
                 return self._termina(noleggio)
         return "Errore: non hai questo noleggio a tuo carico"
 
     # termina un noleggio e restituisce lo strumento al venditore
     def _termina(self, noleggio) -> str:
-        rimborso = noleggio.restituisciStrumento()  # calcola il rimborso per il compratore
-        self._rimettiInVendita(noleggio)    # rimette in vendita lo strumento noleggiato
-        self._noleggio_repo.salva()
+        try:
+            rimborso = noleggio.restituisciStrumento()  # calcola il rimborso per il compratore
+            self._rimettiInVendita(noleggio)    # rimette in vendita lo strumento noleggiato
+            self._noleggio_repo.salva()
+        except (TypeError, ValueError, OverflowError) as e: # se la chiusura del noleggio fallisce, ritorna un messaggio di errore invece di far bloccare l'applicazione
+            return f"Errore: impossibile terminare il noleggio ({e})"
         esito = f"Noleggio terminato correttamente (rimborso {rimborso:.2f} €)"
         if rimborso > 0:    # se il rimborso è maggiore di zero, ossia se i noleggio è terminato anticipatamente il compratore viene rimborsato della somma extra pagata
             esito += " - il compratore viene rimborsato della somma extra pagata"
@@ -57,10 +62,13 @@ class GestoreNoleggi:
         esiti = []  # lista di esiti dei noleggi scaduti
         for noleggio in self._noleggio_repo.tuttiAttivi():  # itera su tutti i noleggi attivi
             if noleggio.isScaduto():    # se il noleggio è scaduto
-                noleggio.restituisciStrumento() #restituisce lo strumento al venditore
-                self._rimettiInVendita(noleggio)    # rimette in vendita lo strumento noleggiato
-                self._noleggio_repo.salva()
-                esiti.append(f"Noleggio scaduto e terminato: {noleggio}")   # aggiunge l'esito alla lista degli esiti
+                try:
+                    noleggio.restituisciStrumento() #restituisce lo strumento al venditore
+                    self._rimettiInVendita(noleggio)    # rimette in vendita lo strumento noleggiato
+                    self._noleggio_repo.salva()
+                    esiti.append(f"Noleggio scaduto e terminato: {noleggio}")   # aggiunge l'esito alla lista degli esiti
+                except (TypeError, ValueError, OverflowError) as e: # se la chiusura di questo noleggio fallisce, lo segnala e passa al successivo senza bloccare il timer
+                    esiti.append(f"Errore nella chiusura del noleggio {noleggio.getId()}: {e}")
         return esiti
 
     # rimette in vendita uno strumento noleggiato
@@ -79,7 +87,7 @@ class GestoreNoleggi:
         id_strumento = temp.get("id")   
         if self._strumento_repo.trovaPerId(id_strumento) is not None:   # se lo strumento esiste già nella repository, genera un nuovo id per lo strumento
             id_strumento = self._strumento_repo.nuovoId()
-        self._strumento_repo.aggiungi(Strumento( id_strumento, temp.get("nome"), categoria, temp.get("azienda"), temp.get("venditore"), quantita, temp.get("prezzo"), temp.get("nome_venditore")))  # aggiunge lo strumento alla repository con la nuova quantita
+        self._strumento_repo.aggiungi(Strumento( id_strumento, temp.get("nome"), categoria, temp.get("azienda"), temp.get("venditore"), quantita, temp.get("prezzo"), temp.get("nome_venditore"), temp.get("prezzo_noleggio_giornaliero")))  # aggiunge lo strumento alla repository con la nuova quantita e il prezzo di noleggio salvato nel noleggio
 
     # elenca tutti i noleggi
     def cronologiaNoleggi(self, id_compratore: str) -> list:
