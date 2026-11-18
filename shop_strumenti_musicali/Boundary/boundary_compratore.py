@@ -52,7 +52,7 @@ class BoundaryCompratore:
                 break
             print(f"Criterio '{criterio}' non valido.")    # se il criterio non è valido, stampa un messaggio di errore
         valore = input("Valore da cercare> ").strip()    # legge il valore da cercare inserito dall'utente
-        if valore and criterio == "prezzo" and aDecimale(valore) is None:    # se il criterio è il prezzo e il valore non è un numero, stampa un messaggio di errore e azzera il valore
+        if valore and criterio == "prezzo massimo" and aDecimale(valore) is None:    # se il criterio è il prezzo massimo e il valore non è un numero, stampa un messaggio di errore e azzera il valore
             print("Nel campo 'prezzo massimo' devi scrivere un numero (es. 450.50), senza lettere")
             valore = ""
         if valore and not chiama(self._gestore_catalogo.cercaStrumenti, criterio, valore):    # se il valore è stato inserito ma non è stato trovato nessuno strumento, entra nel blocco
