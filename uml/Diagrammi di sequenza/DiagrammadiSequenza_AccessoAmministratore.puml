@@ -5,8 +5,8 @@ skinparam sequenceMessageAlign center
 title sd AccessoAmministratore
 
 actor ":Amministratore" as A
-participant ":InterfacciaAccesso" as IA <<control>>
-participant ":GestoreAmministratore" as GA <<boundary>>
+participant ":InterfacciaAccesso" as IA <<boundary>>
+participant ":GestoreAmministratore" as GA <<control>>
 participant ":FileAmministratore" as FA <<repository>>
    
 loop Fino a quando i dati non sono validi  
