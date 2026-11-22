@@ -4,8 +4,8 @@ skinparam sequenceMessageAlign center
 title sd FinestraCompratore
 
 actor ":Compratore" as C
-participant ":PaginaCompratore" as PC <<control>>
-participant ":GestoreShop" as GS <<boundary>>
+participant ":PaginaCompratore" as PC <<boundary>>
+participant ":GestoreShop" as GS <<control>>
 participant ":FileTransazioni" as FT <<repository>>
 
 C -> PC : Sceglie tipo cronologia (Acquisti o Noleggi)
