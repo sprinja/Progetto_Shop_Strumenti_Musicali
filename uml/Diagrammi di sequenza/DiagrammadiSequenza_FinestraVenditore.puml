@@ -4,8 +4,8 @@ skinparam sequenceMessageAlign center
 title sd FinestraVenditore
 
 actor ":Venditore" as V
-participant ":PaginaVenditore" as PV <<control>>
-participant ":GestoreShop" as GS <<boundary>>
+participant ":PaginaVenditore" as PV <<boundary>>
+participant ":GestoreShop" as GS <<control>>
 participant ":FileTransazioni" as FT <<repository>>
 
 V -> PV : Sceglie tipo cronologia (Acquisti o Noleggi)
