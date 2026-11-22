@@ -1,0 +1,63 @@
+@startuml
+skinparam style strictuml
+skinparam sequenceMessageAlign center
+title sd ModificaStrumenti
+
+actor ":Venditore" as V
+participant ":PaginaVenditore" as PV <<boundary>>
+participant ":GestoreShop" as GS <<control>>
+participant ":FileStrumenti" as FS <<repository>>
+participant ":FileTipo" as T <<repository>>
+
+V -> PV : inserisciStrumentodaModificare(idStrumento)
+activate PV
+PV -> GS : verificaPresenzaStrumento(idStrumento)
+activate GS
+GS -> FS : presenzaStrumento(idStrumento)
+activate FS
+FS --> GS : presenza
+deactivate FS
+alt presenza = true
+    GS --> PV : permettiModifica
+    PV --> V : mostraMessaggio("Inserire la caratteristica e la modifica")
+    V -> PV : inserisciModifica(caratteristica, nuovoValore)
+    alt caratteristica = tipo
+        PV -> GS : controlloTipo(tipo)
+        GS -> T : esistenzaTipo(tipo)
+        activate T
+        T --> GS : esisteTipo
+        deactivate T
+        alt esisteTipo = true
+            GS -> FS : modificaStrumento(idStrumento, caratteristica, nuovoValore)
+            GS --> PV : confermaModifica
+            PV --> V : mostraMessaggio("Modifica andata a buon fine")        
+        else esisteTipo = false
+            GS --> PV : rifiutoModifica
+            PV --> V : mostraMessaggio("Non esiste il tipo selezionato")
+        end
+    else caratteristica != tipo
+        GS -> FS : modificaStrumento(idStrumento, caratteristica, nuovoValore)
+        GS --> PV : confermaModifica
+        PV --> V : mostraMessaggio("Modifica andata a buon fine")
+    end
+    opt la modifica è andata a buon fine
+        GS -> FS : verificaDuplicati
+        activate FS
+        FS --> GS : esistenzaCopie
+        deactivate FS
+        opt esistenzaCopie = true
+            GS -> FS : incrementaQuantità(quantita)
+            GS -> FS : eliminaStrumento(idStrumento)
+            GS --> PV : notificaEliminazione
+            PV --> V : mostraMessaggio("Esisteva uno strumento uguale, sono stati uniti")
+        end
+    end
+else presenza = false
+    GS --> PV : rifiutoModifica
+    PV --> V : mostraMessaggio("Non esiste questo strumento")
+end
+
+deactivate GS
+deactivate PV
+
+@enduml

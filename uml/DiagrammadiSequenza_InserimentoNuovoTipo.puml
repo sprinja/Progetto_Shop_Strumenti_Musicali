@@ -1,0 +1,31 @@
+@startuml
+skinparam style strictuml
+skinparam sequenceMessageAlign center
+title sd InserimentoNuovoTipo
+
+actor ":Venditore" as V
+participant ":PaginaVenditore" as PV <<boundary>>
+participant ":GestoreShop" as GS <<control>>
+participant ":FileTipo" as T <<repository>>
+
+V -> PV : inserisciTipo(tipo)
+activate PV
+V -> PV : inserisciQuotaNoleggio(quota)
+PV -> GS : controlloTipo(tipo)
+activate GS
+GS -> T : esistenzaTipo(tipo)
+activate T
+T --> GS : esisteTipo
+deactivate T
+alt esisteTipo = false
+    GS -> T : creaTipo(tipo)
+    GS --> PV : confermaCreazione
+    PV --> V : mostraMessaggio("Creazione andata a buon fine")
+else esisteTipo = true
+    GS --> PV : rifiutoCreazione
+    PV --> V : mostraMessaggio("Il tipo era già esistente")
+end
+deactivate GS
+deactivate PV
+
+@enduml

@@ -1,0 +1,34 @@
+@startuml
+skinparam style strictuml
+skinparam sequenceMessageAlign center
+
+title sd AccessoAmministratore
+
+actor ":Amministratore" as A
+participant ":InterfacciaAccesso" as IA <<boundary>>
+participant ":GestoreAmministratore" as GA <<control>>
+participant ":FileAmministratore" as FA <<repository>>
+   
+loop Fino a quando i dati non sono validi  
+    A -> IA : inserisceDati(username, password)
+    activate IA
+    
+    IA -> GA : verificaAccesso(username, password)
+    activate GA  
+    alt  conferma = true       
+        GA -> FA : verificaPresenza(username, password) 
+        activate FA
+        FA --> GA : conferma
+        deactivate FA
+        GA --> IA : confermaSuccesso
+        IA --> A : apriPagina(tipo)
+    else conferma = false
+        GA --> IA : errore("Dati non validi")
+        IA --> A : mostraErrore("Dati non validi")
+    end
+end
+
+deactivate GA
+deactivate IA
+
+@enduml

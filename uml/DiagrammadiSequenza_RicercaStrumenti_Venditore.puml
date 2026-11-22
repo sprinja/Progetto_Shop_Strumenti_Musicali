@@ -1,0 +1,30 @@
+@startuml
+skinparam style strictuml
+skinparam sequenceMessageAlign center
+
+title sd RicercaStrumentiVenditore
+actor ":Venditore" as V
+participant ":PaginaVenditore" as PV <<boundary>>
+participant ":GestoreShop" as GS <<control>>
+participant ":FileStrumenti" as FS <<repository>>
+V -> PV : Seleziona criterio (tipo, prezzo o azienda)
+activate PV
+V -> PV : Inserisce valore della ricerca
+PV -> GS : ricercaStrumenti(criterio, valore)
+
+activate GS
+GS -> FS : cercaStrumenti(criterio, valore)
+activate FS
+FS --> GS : StrumentiTrovati
+deactivate FS
+
+alt StrumentiTrovati=True and NomeVenditoreStrumento=username
+    GS --> PV : mostraStrumenti(StrumentiTrovati)
+    PV --> V : Visualizza strumenti
+else StrumentiTrovati=False or NomeVenditoreStrumento!=username
+    GS --> PV : erroreRicerca()
+    PV --> V : Messaggio: "Non è stato trovato nessuno strumento con queste caratteristiche"
+end
+deactivate GS
+deactivate
+@enduml

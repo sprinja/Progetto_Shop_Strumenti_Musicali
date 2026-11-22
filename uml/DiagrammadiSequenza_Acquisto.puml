@@ -1,0 +1,47 @@
+@startuml
+skinparam style strictuml
+skinparam sequenceMessageAlign center
+
+title sd AcquistoStrumento
+
+actor ":Compratore" as C
+participant ":PaginaCompratore" as PC <<boundary>>
+participant ":GestoreShop" as GS <<control>>
+participant ":FileStrumenti" as FS <<repository>>
+participant ":FileTransazioni" as FT <<repository>>
+
+C -> PC : selezionaAcquisto(idStrumento, quantita)
+activate PC
+
+PC -> GS : effettuaAcquisto(idStrumento, quantita)
+activate GS
+GS -> FS : verificaEsistenza(idStrumento)
+activate FS
+FS --> GS : esistenzaStrumento
+deactivate FS
+alt esistenzaStrumento = false
+    GS --> PC : errore("Strumento non trovato")
+    PC --> C : mostraErrore("Strumento non trovato")
+else esistenzaStrumento = true
+    GS -> FS : verificaDisponibilita(idStrumento)
+    activate FS
+    FS --> GS : quantitaDisponibile
+    deactivate FS
+
+    alt quantitaDisponibile < quantita
+        GS --> PC : errore("Quantità non disponibile")
+        PC --> C : mostraErrore("Quantità non disponibile")
+    else quantitaDisponibile >= quantita
+        FS -> GS : Strumento
+        GS -> FS : decrementaQuantita(idStrumento,quantita)
+        opt quantitaDisponibile = 0
+            GS -> FS : eliminaStrumento(idStrumento)
+        end
+    GS -> FT : registraTransazione(nomeUtente, nomeStrumento, quantita, prezzo, data)
+    GS --> PC : confermaAcquisto
+    PC --> C : mostraMessaggio("Acquisto completato")
+    end
+end
+deactivate GS
+deactivate PC
+@enduml

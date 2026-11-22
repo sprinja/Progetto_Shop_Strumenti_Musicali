@@ -1,0 +1,30 @@
+@startuml
+skinparam style strictuml
+skinparam sequenceMessageAlign center
+
+title sd RicercaStrumentiCompratore
+actor ":Compratore" as C
+participant ":PaginaCompratore" as PC <<boundary>>
+participant ":GestoreShop" as GS <<control>>
+participant ":FileStrumenti" as FS <<repository>>
+C -> PC : Seleziona criterio (tipo, prezzo o azienda)
+activate PC
+C -> PC : Inserisce valore della ricerca
+PC -> GS : ricercaStrumenti(criterio, valore)
+
+activate GS
+GS -> FS : cercaStrumenti(criterio, valore)
+activate FS
+FS --> GS : StrumentiTrovati
+deactivate FS
+
+alt StrumentiTrovati=True
+    GS --> PC : mostraStrumenti(StrumentiTrovati)
+    PC --> C : Visualizza strumenti
+else StrumentiTrovati=False
+    GS --> PC : erroreRicerca()
+    PC --> C : Messaggio: "Non è stato trovato nessuno strumento con queste caratteristiche"
+end
+deactivate GS
+deactivate PC
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+skinparam style strictuml
+skinparam sequenceMessageAlign center
+
+title sd RimozioneStrumenti
+actor ":Amministratore" as A
+participant ":PaginaAmministratore" as PA <<boundary>>
+participant ":GestoreShop" as GS <<control>>
+participant ":FileStrumenti" as FS <<repository>>
+
+A -> PA : cercaStrumento(idStrumento)
+activate PA 
+PA -> GS : controlloStrumento(idStrumento)
+activate GS
+GS -> FS : verificaPresenza (idStrumento)
+activate FS
+FS --> GS : presenza
+deactivate FS
+alt presenza = True
+    GS -> FS : rimuoviStrumento(idStrumento)
+    GS --> PA : confermaRimozioneStrumento
+    PA --> A : mostraMessaggio("Lo strumento è stato rimosso")
+else presenza = False
+    GS --> PA : erroreRicerca
+    PA --> A : mostraErrore("Non esiste lo strumento cercato")
+end
+deactivate GS
+deactivate PA
+@enduml

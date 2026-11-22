@@ -1,0 +1,40 @@
+@startuml
+skinparam style strictuml
+skinparam sequenceMessageAlign center
+title sd FinestraCompratore
+
+actor ":Compratore" as C
+participant ":PaginaCompratore" as PC <<boundary>>
+participant ":GestoreShop" as GS <<control>>
+participant ":FileTransazioni" as FT <<repository>>
+
+C -> PC : Sceglie tipo cronologia (Acquisti o Noleggi)
+
+activate PC
+PC -> GS : recuperaCronologia(tipoRicerca, nomeUtente)
+activate GS
+
+GS -> FT : cercaDati(tipoRicerca, nomeUtente)
+activate FT
+FT --> GS : StrumentiTrovati
+deactivate FT
+alt Selezione "Acquisti"
+    alt StrumentiTrovati=True
+        GS --> PC : mostraAcquisti(strumento, prezzo, dataAcquisto)
+        PC --> C : Visualizza elenco acquisti
+    else StrumentiTrovati=False
+        GS --> PC : print("Nessun acquisto trovato per questo utente")
+    end
+else Selezione "Noleggi"
+    alt StrumentiTrovati=True
+        GS --> PC : mostraDatiNoleggi(strumento, prezzo, dataInizio, dataFine)
+        PC --> C : Visualizza elenco noleggi
+    else StrumentiTrovati=False
+        GS --> PC : print("Nessun noleggio trovato per questo utente")
+    end
+end
+deactivate GS
+deactivate PC
+
+
+@enduml

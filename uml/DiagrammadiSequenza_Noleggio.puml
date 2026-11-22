@@ -1,0 +1,44 @@
+@startuml
+skinparam style strictuml
+skinparam sequenceMessageAlign center
+
+title sd NoleggioStrumento
+actor ":Compratore" as C
+participant ":PaginaCompratore" as PC <<boundary>>
+participant ":GestoreShop" as GS <<control>>
+participant ":FileStrumenti" as FS <<repository>>
+participant ":FileTransazioni" as FT <<repository>>
+
+C -> PC : selezionaNoleggio(idStrumento, quantita, durata)
+activate PC
+
+PC -> GS : effettuaNoleggio(idStrumento, quantita, durata)
+
+activate GS
+GS -> FS : verificaEsistenza(idStrumento)
+activate FS
+FS --> GS : esistenzaStrumento
+deactivate FS
+alt esistenzaStrumento = false
+    GS --> PC : errore("Strumento non trovato")
+    PC --> C : mostraErrore("Strumento non trovato")
+else esistenzaStrumento = true
+    GS -> FS : verificaDisponibilita(idStrumento)
+    activate FS
+    FS --> GS : quantitaDisponibile
+    deactivate FS
+    alt quantitaDisponibile< quantitaRichiesta
+        GS --> PC : errore("Quantità non disponibile")
+        PC --> C : mostraErrore("Quantità non disponibile")
+    else quantitaDisponibile >= quantitaRichiesta
+        FS -> GS : Strumento
+        GS -> FS : decrementaQuantita(idStrumento)
+        GS -> FT : registraTransazione(nomeUtente, idStrumento, quantita, prezzo, dataInizio)
+        GS --> PC : confermaNoleggio(dataInizio)
+        PC --> C : mostraMessaggio("Noleggio completato")
+    end
+end
+
+deactivate GS
+deactivate PC
+@enduml
